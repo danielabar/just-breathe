@@ -25,6 +25,7 @@
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1.2rem;
+  margin-top: 0.3rem;
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
   font-size: 1.1rem;
@@ -56,6 +57,9 @@
   font-size: 1rem;
   line-height: 1.5;
 }
+
+.instructions strong {
+  font-weight: 600;}
 
 .progress-bar {
   width: 100%;
