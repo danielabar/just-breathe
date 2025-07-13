@@ -4,10 +4,10 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   let totalMs = durationMin * 60 * 1000;
   let elapsed = 0;
   let running = true;
-  let state = 'in'; // 'in' or 'out'
-  let breathStart = Date.now();
-  let breathMs = inSec * 1000;
-  let sessionStart = Date.now();
+  let state;
+  let breathStart;
+  let breathMs;
+  let sessionStart;
   container.innerHTML = `
     <div class="breathing-state" id="breathing-state"></div>
     <div class="progress-bar"><div class="progress" id="progress"></div></div>
@@ -61,10 +61,32 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
     requestAnimationFrame(updateState);
   }
 
-  // Start session
-  speak('Breathe in');
-  stateEl.textContent = 'Breathe in';
-  requestAnimationFrame(updateState);
+  // Countdown before starting session
+  function startCountdown(count) {
+    if (count === 0) {
+      // Start session after countdown
+      state = 'in';
+      breathMs = inSec * 1000;
+      sessionStart = Date.now();
+      breathStart = Date.now();
+      speak('Breathe in');
+      stateEl.textContent = 'Breathe in';
+      requestAnimationFrame(updateState);
+      return;
+    }
+    if (count === 3) {
+      stateEl.textContent = 'Starting in 3...';
+      speak('Starting in 3');
+      // Add a slightly longer pause after 'Starting in 3...'
+      setTimeout(() => startCountdown(count - 1), 1500);
+    } else {
+      stateEl.textContent = count + '...';
+      speak(String(count));
+      setTimeout(() => startCountdown(count - 1), 1000);
+    }
+  }
+
+  startCountdown(3);
 
   stopBtn.onclick = () => {
     running = false;
