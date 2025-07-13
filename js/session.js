@@ -17,7 +17,8 @@ async function requestWakeLock() {
 
 export function startBreathingSession({ inSec, outSec, durationMin, container, onDone }) {
   // Countdown timing constants
-  const COUNTDOWN_STARTING_PAUSE_MS = 1800; // Pause after "Starting in 3..."
+  // const COUNTDOWN_STARTING_PAUSE_MS = 1800; // Pause after "Starting in 3..."
+  const COUNTDOWN_STARTING_PAUSE_MS = 1000; // Pause after "Starting in 3..."
   const COUNTDOWN_NUMBER_PAUSE_MS = 1000;   // Pause after each countdown number (2, 1)
   let totalMs = durationMin * 60 * 1000;
   let elapsed = 0;
@@ -88,6 +89,19 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   }
 
   // Countdown before starting session
+  // Helper to speak and wait for speech to finish, then call callback
+  function speakAndWait(text, pauseMs, cb) {
+    const utter = speak(text, true); // pass true to get utterance object
+    if (utter && typeof utter.addEventListener === 'function') {
+      utter.addEventListener('end', () => {
+        setTimeout(cb, pauseMs);
+      });
+    } else {
+      // fallback: just wait
+      setTimeout(cb, pauseMs);
+    }
+  }
+
   function startCountdown(count) {
     if (count === 0) {
       // Start session after countdown
@@ -102,17 +116,13 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
     }
     if (count === 3) {
       stateEl.textContent = 'Starting in 3...';
-      speak('Starting in 3');
-      // After the longer pause, show/speak 2, then 1, then start
-      setTimeout(() => {
+      speakAndWait('Starting in 3', COUNTDOWN_STARTING_PAUSE_MS, () => {
         stateEl.textContent = '2...';
-        speak('2');
-        setTimeout(() => {
+        speakAndWait('2', COUNTDOWN_NUMBER_PAUSE_MS, () => {
           stateEl.textContent = '1...';
-          speak('1');
-          setTimeout(() => startCountdown(0), COUNTDOWN_NUMBER_PAUSE_MS);
-        }, COUNTDOWN_NUMBER_PAUSE_MS);
-      }, COUNTDOWN_STARTING_PAUSE_MS);
+          speakAndWait('1', COUNTDOWN_NUMBER_PAUSE_MS, () => startCountdown(0));
+        });
+      });
     }
     // No else needed, as 2 and 1 are handled above
   }
