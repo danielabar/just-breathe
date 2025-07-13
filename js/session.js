@@ -1,5 +1,20 @@
 import { speak } from './voice.js';
 
+// Wake Lock API support
+let wakeLock = null;
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => {
+        wakeLock = null;
+      });
+    }
+  } catch (err) {
+    // Wake Lock request failed - ignore
+  }
+}
+
 export function startBreathingSession({ inSec, outSec, durationMin, container, onDone }) {
   // Countdown timing constants
   const COUNTDOWN_STARTING_PAUSE_MS = 1800; // Pause after "Starting in 3..."
@@ -19,6 +34,9 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   const stateEl = container.querySelector('#breathing-state');
   const progressEl = container.querySelector('#progress');
   const stopBtn = container.querySelector('#stop-btn');
+
+  // Try to keep the screen awake
+  requestWakeLock();
 
   function updateState() {
     if (!running) return;
@@ -41,6 +59,11 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
         progressEl.style.width = '100%';
         stopBtn.textContent = 'Restart';
         stopBtn.onclick = onDone;
+        // Release wake lock if held
+        if (wakeLock && wakeLock.release) {
+          wakeLock.release();
+          wakeLock = null;
+        }
       }, outSec * 1000);
       return;
     }
@@ -99,5 +122,10 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   stopBtn.onclick = () => {
     running = false;
     onDone();
+    // Release wake lock if held
+    if (wakeLock && wakeLock.release) {
+      wakeLock.release();
+      wakeLock = null;
+    }
   };
 }
