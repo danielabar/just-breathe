@@ -1,0 +1,23 @@
+{
+  "name": "just-breathe",
+  "version": "1.0.0",
+  "description": "A minimal, science-based breathing meditation app built with vanilla web technologies - no ads, no accounts, just simple guided breathing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielabar/just-breathe.git"
+  },
+  "author": "Daniela Baron",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielabar/just-breathe/issues"
+  },
+  "homepage": "https://github.com/danielabar/just-breathe#readme",
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}
