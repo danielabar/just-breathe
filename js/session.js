@@ -77,13 +77,18 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
     if (count === 3) {
       stateEl.textContent = 'Starting in 3...';
       speak('Starting in 3');
-      // Add a slightly longer pause after 'Starting in 3...'
-      setTimeout(() => startCountdown(count - 1), 1500);
-    } else {
-      stateEl.textContent = count + '...';
-      speak(String(count));
-      setTimeout(() => startCountdown(count - 1), 1000);
+      // After the longer pause, show/speak 2, then 1, then start
+      setTimeout(() => {
+        stateEl.textContent = '2...';
+        speak('2');
+        setTimeout(() => {
+          stateEl.textContent = '1...';
+          speak('1');
+          setTimeout(() => startCountdown(0), 1000);
+        }, 1000);
+      }, 1500);
     }
+    // No else needed, as 2 and 1 are handled above
   }
 
   startCountdown(3);
