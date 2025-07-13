@@ -1,0 +1,13 @@
+:root {
+  --font-main: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Mono', 'Menlo', monospace;
+  --color-bg: #f6f7f9;
+  --color-text: #444;
+  --color-accent: #6bb7b7;
+  --color-accent-light: #b2e0e0;
+  --color-accent-dark: #3a7c7c;
+  --color-card: #fff;
+  --color-border: #e0e0e0;
+  --color-success: #7fd47f;
+  --color-danger: #e57373;
+}
