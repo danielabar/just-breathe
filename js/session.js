@@ -1,6 +1,9 @@
 import { speak } from './voice.js';
 
 export function startBreathingSession({ inSec, outSec, durationMin, container, onDone }) {
+  // Countdown timing constants
+  const COUNTDOWN_STARTING_PAUSE_MS = 1800; // Pause after "Starting in 3..."
+  const COUNTDOWN_NUMBER_PAUSE_MS = 1000;   // Pause after each countdown number (2, 1)
   let totalMs = durationMin * 60 * 1000;
   let elapsed = 0;
   let running = true;
@@ -84,9 +87,9 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
         setTimeout(() => {
           stateEl.textContent = '1...';
           speak('1');
-          setTimeout(() => startCountdown(0), 1000);
-        }, 1000);
-      }, 1500);
+          setTimeout(() => startCountdown(0), COUNTDOWN_NUMBER_PAUSE_MS);
+        }, COUNTDOWN_NUMBER_PAUSE_MS);
+      }, COUNTDOWN_STARTING_PAUSE_MS);
     }
     // No else needed, as 2 and 1 are handled above
   }
