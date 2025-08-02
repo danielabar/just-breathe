@@ -1,5 +1,5 @@
 import { startBreathingSession } from './session.js';
-import { loadPrefs, savePrefs, DEFAULT_PREFS } from './userPrefs.js';
+import { loadPrefs, savePrefs, DEFAULT_PREFS, STANDARD_DURATIONS, isCustomDuration } from './userPrefs.js';
 
 export function renderMainView(container) {
   const prefs = loadPrefs();
@@ -19,16 +19,11 @@ export function renderMainView(container) {
       </label>
       <label>Duration (minutes)
         <select name="duration">
-          <option value="5"${prefs.duration === 5 ? ' selected' : ''}>5</option>
-          <option value="10"${prefs.duration === 10 ? ' selected' : ''}>10</option>
-          <option value="15"${prefs.duration === 15 ? ' selected' : ''}>15</option>
-          <option value="20"${prefs.duration === 20 ? ' selected' : ''}>20</option>
-          <option value="25"${prefs.duration === 25 ? ' selected' : ''}>25</option>
-          <option value="30"${prefs.duration === 30 ? ' selected' : ''}>30</option>
-          <option value="custom"${prefs.duration !== 5 && prefs.duration !== 10 && prefs.duration !== 15 && prefs.duration !== 20 && prefs.duration !== 25 && prefs.duration !== 30 ? ' selected' : ''}>Custom</option>
+          ${STANDARD_DURATIONS.map(d => `<option value="${d}"${prefs.duration === d ? ' selected' : ''}>${d}</option>`).join('')}
+          <option value="custom"${isCustomDuration(prefs.duration) ? ' selected' : ''}>Custom</option>
         </select>
       </label>
-      <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:${prefs.duration !== 5 && prefs.duration !== 10 && prefs.duration !== 15 && prefs.duration !== 20 && prefs.duration !== 25 && prefs.duration !== 30 ? '' : 'none'};" value="${prefs.duration !== 5 && prefs.duration !== 10 && prefs.duration !== 15 && prefs.duration !== 20 && prefs.duration !== 25 && prefs.duration !== 30 ? prefs.duration : ''}">
+      <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:${isCustomDuration(prefs.duration) ? '' : 'none'};" value="${isCustomDuration(prefs.duration) ? prefs.duration : ''}">
       <button type="submit">Start</button>
     </form>
     <div id="session-area"></div>

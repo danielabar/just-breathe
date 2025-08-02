@@ -4,11 +4,17 @@
 const NAMESPACE = 'justBreathe';
 const PREFS_KEY = `${NAMESPACE}:prefs`;
 
+
+export const STANDARD_DURATIONS = [5, 10, 15, 20, 25, 30];
 export const DEFAULT_PREFS = {
   inSec: 4.5,
   outSec: 4.5,
   duration: 10,
 };
+
+export function isCustomDuration(duration) {
+  return !STANDARD_DURATIONS.includes(duration);
+}
 
 export function savePrefs({ inSec, outSec, duration }) {
   const prefs = { inSec, outSec, duration };
