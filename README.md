@@ -47,7 +47,7 @@ Many meditation apps are filled with upsells, ads, and unnecessary complexity. "
 To run the app locally:
 
 ```sh
-npx http-server -c-1
+npm run dev
 ```
 
 This will start a local server and disable caching (`-c-1`), so you always see your latest changes. Then open the provided URL (usually http://127.0.0.1:8080) in your browser.
