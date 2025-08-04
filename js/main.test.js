@@ -15,10 +15,14 @@ vi.mock("./session.js", () => ({
   startBreathingSession: vi.fn(),
 }));
 
+// System under test
 import { renderMainView } from "./main.js";
 
 // Required so we can provide alternate mock implementations
 import * as userPrefs from "./userPrefs.js";
+
+// Required so we can verify the session start
+import { startBreathingSession } from "./session.js";
 
 describe("renderMainView", () => {
   let container;
@@ -88,5 +92,59 @@ describe("renderMainView", () => {
       outSec: 6,
       duration: 10,
     });
+  });
+
+  it("calls startBreathingSession with correct arguments on form submit", () => {
+    renderMainView(container);
+
+    const form = container.querySelector(".breath-form");
+    const inInput = form.elements["in"];
+    const outInput = form.elements["out"];
+    const durationSelect = form.elements["duration"];
+    const customInput = form.elements["customDuration"];
+
+    // Simulate user input
+    inInput.value = "4";
+    outInput.value = "5";
+    durationSelect.value = "15";
+    customInput.value = "";
+
+    // Submit the form
+    form.dispatchEvent(new Event("submit", { bubbles: true }));
+
+    // The session-area container
+    const sessionArea = container.querySelector("#session-area");
+
+    // Check arguments passed to startBreathingSession
+    expect(startBreathingSession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        inSec: 4,
+        outSec: 5,
+        durationMin: 15,
+        container: sessionArea,
+        onDone: expect.any(Function),
+      })
+    );
+  });
+
+  it("hides the form after starting a session", () => {
+    renderMainView(container);
+
+    const form = container.querySelector(".breath-form");
+    const inInput = form.elements["in"];
+    const outInput = form.elements["out"];
+    const durationSelect = form.elements["duration"];
+    const customInput = form.elements["customDuration"];
+
+    // Simulate user input
+    inInput.value = "4";
+    outInput.value = "5";
+    durationSelect.value = "15";
+    customInput.value = "";
+
+    // Submit the form
+    form.dispatchEvent(new Event("submit", { bubbles: true }));
+
+    expect(form.style.display).toBe("none");
   });
 });
