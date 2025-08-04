@@ -29,20 +29,23 @@ describe("renderMainView", () => {
     vi.restoreAllMocks();
   });
 
-  it("loads form with user prefs", () => {
-    // Use default mock implementations
+  // Use default mock implementations
+  it("loads form with standard user prefs and hides custom duration input", () => {
     renderMainView(container);
     const inInput = container.querySelector('input[name="in"]');
     const outInput = container.querySelector('input[name="out"]');
     const durationSelect = container.querySelector('select[name="duration"]');
+    const customInput = container.querySelector('input[name="customDuration"]');
 
     expect(inInput.value).toBe("3");
     expect(outInput.value).toBe("4");
     expect(durationSelect.value).toBe("15");
+    expect(customInput.style.display).toBe("none");
+    expect(customInput.value).toBe("");
   });
 
+  // Override the mock implementations for this test only
   it("shows custom duration input when prefs.duration is custom", () => {
-    // Override the mock implementations for this test only
     userPrefs.loadPrefs.mockImplementation(() => ({
       inSec: 3,
       outSec: 4,
