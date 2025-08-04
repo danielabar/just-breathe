@@ -16,6 +16,8 @@ vi.mock("./session.js", () => ({
 }));
 
 import { renderMainView } from "./main.js";
+
+// Required so we can provide alternate mock implementations
 import * as userPrefs from "./userPrefs.js";
 
 describe("renderMainView", () => {
@@ -61,5 +63,30 @@ describe("renderMainView", () => {
     expect(durationSelect.value).toBe("custom");
     expect(customInput.style.display).toBe("");
     expect(customInput.value).toBe("42");
+  });
+
+  it("calls savePrefs with correct values on form submit", () => {
+    renderMainView(container);
+
+    const form = container.querySelector(".breath-form");
+    const inInput = form.elements["in"];
+    const outInput = form.elements["out"];
+    const durationSelect = form.elements["duration"];
+    const customInput = form.elements["customDuration"];
+
+    // Simulate user input
+    inInput.value = "5";
+    outInput.value = "6";
+    durationSelect.value = "10";
+    customInput.value = "";
+
+    // Submit the form
+    form.dispatchEvent(new Event("submit", { bubbles: true }));
+
+    expect(userPrefs.savePrefs).toHaveBeenCalledWith({
+      inSec: 5,
+      outSec: 6,
+      duration: 10,
+    });
   });
 });
