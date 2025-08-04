@@ -5,6 +5,7 @@ import {
   savePrefs,
   STANDARD_DURATIONS,
   DEFAULT_PREFS,
+  isCustomDuration,
 } from "./userPrefs.js";
 
 const PREFS_KEY = "justBreathe:prefs";
@@ -63,5 +64,84 @@ describe("loadPrefs", () => {
     };
     expect(loadPrefs()).toEqual(DEFAULT_PREFS);
     localStorage.getItem = originalGetItem;
+
+  });
+});
+
+describe("savePrefs", () => {
+  const PREFS_KEY = "justBreathe:prefs";
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it("saves valid preferences to localStorage", () => {
+    const prefs = { inSec: 6, outSec: 7, duration: 15 };
+    savePrefs(prefs);
+    const stored = JSON.parse(localStorage.getItem(PREFS_KEY));
+    expect(stored).toEqual(prefs);
+  });
+
+  it("handles missing fields gracefully", () => {
+    const partialPrefs = { inSec: 8 };
+    savePrefs(partialPrefs);
+    const stored = JSON.parse(localStorage.getItem(PREFS_KEY));
+    expect(stored).toEqual({ inSec: 8 });
+  });
+
+  it("handles localStorage errors", () => {
+    const originalSetItem = localStorage.setItem;
+    localStorage.setItem = () => {
+      throw new Error("fail");
+    };
+    expect(() => savePrefs({ inSec: 5, outSec: 5, duration: 10 })).not.toThrow();
+    localStorage.setItem = originalSetItem;
+  });
+
+  it("overwrites previous preferences", () => {
+    const firstPrefs = { inSec: 4, outSec: 5, duration: 10 };
+    const secondPrefs = { inSec: 7, outSec: 8, duration: 20 };
+    savePrefs(firstPrefs);
+    savePrefs(secondPrefs);
+    const stored = JSON.parse(localStorage.getItem(PREFS_KEY));
+    expect(stored).toEqual(secondPrefs);
+  });
+
+  it("stores only expected fields", () => {
+    const prefsWithExtra = { inSec: 5, outSec: 6, duration: 10, foo: "bar", bar: 123 };
+    savePrefs(prefsWithExtra);
+    const stored = JSON.parse(localStorage.getItem(PREFS_KEY));
+    expect(stored).toEqual({ inSec: 5, outSec: 6, duration: 10 });
+  });
+});
+
+describe("isCustomDuration", () => {
+  it("returns false for all STANDARD_DURATIONS", () => {
+    for (const duration of STANDARD_DURATIONS) {
+      expect(isCustomDuration(duration)).toBe(false);
+    }
+  });
+
+  it("returns true for values not in STANDARD_DURATIONS", () => {
+    expect(isCustomDuration(1)).toBe(true);
+    expect(isCustomDuration(7)).toBe(true);
+    expect(isCustomDuration(100)).toBe(true);
+    expect(isCustomDuration(0)).toBe(true);
+    expect(isCustomDuration(-5)).toBe(true);
+    expect(isCustomDuration(12.5)).toBe(true);
+  });
+
+  it("returns true for non-number types", () => {
+    expect(isCustomDuration("10")).toBe(true);
+    expect(isCustomDuration(null)).toBe(true);
+    expect(isCustomDuration(undefined)).toBe(true);
+    expect(isCustomDuration([10])).toBe(true);
+    expect(isCustomDuration({ duration: 10 })).toBe(true);
+  });
+
+  it("returns true for floating point numbers not in STANDARD_DURATIONS", () => {
+    expect(isCustomDuration(5.1)).toBe(true);
+    expect(isCustomDuration(9.9)).toBe(true);
+    expect(isCustomDuration(15.5)).toBe(true);
   });
 });
