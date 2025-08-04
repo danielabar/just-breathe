@@ -1,5 +1,5 @@
 import { startBreathingSession } from './session.js';
-import { loadPrefs, savePrefs, DEFAULT_PREFS, STANDARD_DURATIONS, isCustomDuration } from './userPrefs.js';
+import { loadPrefs, savePrefs, STANDARD_DURATIONS, isCustomDuration } from './userPrefs.js';
 
 export function renderMainView(container) {
   const prefs = loadPrefs();

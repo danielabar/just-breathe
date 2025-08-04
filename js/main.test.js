@@ -7,7 +7,6 @@ vi.mock("./userPrefs.js", () => ({
     duration: 15,
   })),
   savePrefs: vi.fn(),
-  DEFAULT_PREFS: { inSec: 4.5, outSec: 4.5, duration: 10 },
   STANDARD_DURATIONS: [5, 10, 15, 20, 25, 30],
   isCustomDuration: vi.fn(() => false),
 }));
