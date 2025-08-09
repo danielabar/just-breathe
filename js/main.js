@@ -1,6 +1,8 @@
 import { startBreathingSession } from './session.js';
+import { loadPrefs, savePrefs, STANDARD_DURATIONS, isCustomDuration } from './userPrefs.js';
 
 export function renderMainView(container) {
+  const prefs = loadPrefs();
   container.innerHTML = `
     <div class="instructions">
       <strong>How it works:</strong><br>
@@ -10,23 +12,18 @@ export function renderMainView(container) {
     </div>
     <form class="breath-form">
       <label>Breathe in (seconds)
-        <input type="number" name="in" min="1" max="15" step="0.1" value="4.5" required>
+        <input type="number" name="in" min="1" max="15" step="0.1" value="${prefs.inSec}" required>
       </label>
       <label>Breathe out (seconds)
-        <input type="number" name="out" min="1" max="15" step="0.1" value="4.5" required>
+        <input type="number" name="out" min="1" max="15" step="0.1" value="${prefs.outSec}" required>
       </label>
       <label>Duration (minutes)
         <select name="duration">
-          <option value="5">5</option>
-          <option value="10" selected>10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
-          <option value="30">30</option>
-          <option value="custom">Custom</option>
+          ${STANDARD_DURATIONS.map(d => `<option value="${d}"${prefs.duration === d ? ' selected' : ''}>${d}</option>`).join('')}
+          <option value="custom"${isCustomDuration(prefs.duration) ? ' selected' : ''}>Custom</option>
         </select>
       </label>
-      <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:none;">
+      <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:${isCustomDuration(prefs.duration) ? '' : 'none'};" value="${isCustomDuration(prefs.duration) ? prefs.duration : ''}">
       <button type="submit">Start</button>
     </form>
     <div id="session-area"></div>
@@ -55,6 +52,7 @@ export function renderMainView(container) {
       customInput.focus();
       return;
     }
+    savePrefs({ inSec, outSec, duration });
     startBreathingSession({
       inSec,
       outSec,
