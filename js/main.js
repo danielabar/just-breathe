@@ -4,29 +4,31 @@ import { loadPrefs, savePrefs, STANDARD_DURATIONS, isCustomDuration } from './us
 export function renderMainView(container) {
   const prefs = loadPrefs();
   container.innerHTML = `
-    <div class="instructions">
-      <strong>How it works:</strong><br>
-      Set your preferred breathing pace and session length. When you start, just listen and relax. All prompts are through your device's voice.
-      <br><br>
-      <em>Inhale and exhale gently through your nose. No need to watch the screen.</em>
+    <div class="main-view-card">
+      <div class="instructions">
+        <strong>How it works:</strong><br>
+        Set your preferred breathing pace and session length. When you start, just listen and relax. All prompts are through your device's voice.
+        <br><br>
+        <em>Inhale and exhale gently through your nose. No need to watch the screen.</em>
+      </div>
+      <form class="breath-form">
+        <label>Breathe in (seconds)
+          <input type="number" name="in" min="1" max="15" step="0.1" value="${prefs.inSec}" required>
+        </label>
+        <label>Breathe out (seconds)
+          <input type="number" name="out" min="1" max="15" step="0.1" value="${prefs.outSec}" required>
+        </label>
+        <label>Duration (minutes)
+          <select name="duration">
+            ${STANDARD_DURATIONS.map(d => `<option value="${d}"${prefs.duration === d ? ' selected' : ''}>${d}</option>`).join('')}
+            <option value="custom"${isCustomDuration(prefs.duration) ? ' selected' : ''}>Custom</option>
+          </select>
+        </label>
+        <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:${isCustomDuration(prefs.duration) ? '' : 'none'};" value="${isCustomDuration(prefs.duration) ? prefs.duration : ''}">
+        <button type="submit">Start</button>
+      </form>
+      <div id="session-area"></div>
     </div>
-    <form class="breath-form">
-      <label>Breathe in (seconds)
-        <input type="number" name="in" min="1" max="15" step="0.1" value="${prefs.inSec}" required>
-      </label>
-      <label>Breathe out (seconds)
-        <input type="number" name="out" min="1" max="15" step="0.1" value="${prefs.outSec}" required>
-      </label>
-      <label>Duration (minutes)
-        <select name="duration">
-          ${STANDARD_DURATIONS.map(d => `<option value="${d}"${prefs.duration === d ? ' selected' : ''}>${d}</option>`).join('')}
-          <option value="custom"${isCustomDuration(prefs.duration) ? ' selected' : ''}>Custom</option>
-        </select>
-      </label>
-      <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:${isCustomDuration(prefs.duration) ? '' : 'none'};" value="${isCustomDuration(prefs.duration) ? prefs.duration : ''}">
-      <button type="submit">Start</button>
-    </form>
-    <div id="session-area"></div>
   `;
 
   const form = container.querySelector('.breath-form');
