@@ -22,3 +22,6 @@ navAbout.addEventListener('click', () => showView('about'));
 
 // Default view
 showView('main');
+
+// So we can test it
+export { showView };
