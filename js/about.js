@@ -1,7 +1,6 @@
 export function renderAboutView(container) {
   container.innerHTML = `
     <div class="about-view-card">
-      <h2>About</h2>
       <div class="instructions">
         <strong>Why Breathe Easy?</strong><br>
         This app is inspired by the science in <a href="https://www.mrjamesnestor.com/breath-book/" target="_blank" rel="noopener">James Nestor's book <em>Breath: The New Science of a Lost Art</em></a>.
