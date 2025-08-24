@@ -27,22 +27,6 @@
   font-size: 1.1rem;
   background: #f9f9f9;
 }
-.breath-form button {
-  width: 100%;
-  background: var(--color-accent-dark);
-  color: #fff;
-  border: none;
-  border-radius: 1.5rem;
-  padding: 0.7rem 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  transition: background 0.2s;
-}
-.breath-form button:hover {
-  background: var(--color-accent);
-}
 
 .instructions {
   background: var(--color-accent-light);
