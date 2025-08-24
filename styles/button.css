@@ -1,0 +1,28 @@
+.app-button {
+  width: 100%;
+  background: var(--color-accent-dark);
+  color: #fff;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.7rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+.app-button:hover {
+  background: var(--color-accent);
+}
+
+.app-button--secondary {
+  background: #fff;
+  color: var(--color-accent-dark);
+  border: 2px solid var(--color-accent-dark);
+}
+
+.app-button--secondary:hover {
+  background: var(--color-accent-light);
+  color: var(--color-accent-dark);
+  border-color: var(--color-accent);
+}
