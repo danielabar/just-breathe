@@ -4,6 +4,8 @@
 @import './global.css';
 @import './app.css';
 
+@import './button.css';
+
 html, body {
 	width: 100%;
 	min-height: 100vh;
