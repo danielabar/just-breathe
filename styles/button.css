@@ -14,3 +14,15 @@
 .app-button:hover {
   background: var(--color-accent);
 }
+
+.app-button--secondary {
+  background: #fff;
+  color: var(--color-accent-dark);
+  border: 2px solid var(--color-accent-dark);
+}
+
+.app-button--secondary:hover {
+  background: var(--color-accent-light);
+  color: var(--color-accent-dark);
+  border-color: var(--color-accent);
+}

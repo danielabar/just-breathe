@@ -30,7 +30,7 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   container.innerHTML = `
     <div class="breathing-state" id="breathing-state"></div>
     <div class="progress-bar"><div class="progress" id="progress"></div></div>
-    <button id="stop-btn" class="app-button">Stop</button>
+    <button id="stop-btn" class="app-button app-button--secondary">Stop</button>
   `;
   const stateEl = container.querySelector('#breathing-state');
   const progressEl = container.querySelector('#progress');
