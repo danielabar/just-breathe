@@ -45,4 +45,22 @@ describe("startBreathingSession countdown", () => {
     expect(stateEl.textContent).toBe('Breathe in');
     expect(speak).toHaveBeenCalledWith('Breathe in');
   });
+
+  it("calls onDone and stops session when Stop button is clicked", () => {
+    startBreathingSession({
+      inSec: 3,
+      outSec: 4,
+      durationMin: 1,
+      container,
+      onDone,
+    });
+    const stopBtn = container.querySelector("#stop-btn");
+    expect(stopBtn).toBeTruthy();
+
+    // Simulate clicking the Stop button
+    stopBtn.click();
+
+    // onDone should be called
+    expect(onDone).toHaveBeenCalled();
+  });
 });
