@@ -12,9 +12,11 @@ describe('showView', () => {
   beforeEach(async () => {
     document.body.innerHTML = `
       <header>
-        <nav>
-          <button id="nav-main">Home</button>
-          <button id="nav-about">About</button>
+        <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu"></button>
+        <div id="menu-overlay" class="menu-overlay" hidden></div>
+        <nav id="mobile-menu" class="mobile-menu" hidden>
+          <button id="nav-main" type="button">Home</button>
+          <button id="nav-about" type="button">About</button>
         </nav>
       </header>
       <main>
