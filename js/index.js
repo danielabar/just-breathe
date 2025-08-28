@@ -4,11 +4,21 @@ import { renderAboutView } from './about.js';
 const appView = document.getElementById('app-view');
 const hamburgerBtn = document.getElementById('hamburger-btn');
 const mobileMenu = document.getElementById('mobile-menu');
+const menuOverlay = document.getElementById('menu-overlay');
 
-// Helper to clear aria-current from all menu buttons
 function clearAriaCurrent() {
   const btns = mobileMenu.querySelectorAll('button');
   btns.forEach(btn => btn.removeAttribute('aria-current'));
+}
+
+function closeMenu() {
+  mobileMenu.hidden = true;
+  menuOverlay.hidden = true;
+}
+
+function openMenu() {
+  mobileMenu.hidden = false;
+  menuOverlay.hidden = false;
 }
 
 function showView(view) {
@@ -22,27 +32,33 @@ function showView(view) {
     if (navMain) navMain.setAttribute('aria-current', 'page');
     renderMainView(appView);
   }
-  // Hide menu after navigation (for mobile UX)
-  mobileMenu.hidden = true;
+  closeMenu();
 }
 
-// Populate the mobile menu with nav buttons
-function setupMenu() {
-  mobileMenu.innerHTML = `
-    <button id="nav-main" type="button">Home</button>
-    <button id="nav-about" type="button">About</button>
-  `;
+// Attach menu button listeners
+function setupMenuListeners() {
   const navMain = document.getElementById('nav-main');
   const navAbout = document.getElementById('nav-about');
-  navMain.addEventListener('click', () => showView('main'));
-  navAbout.addEventListener('click', () => showView('about'));
+  if (navMain) navMain.addEventListener('click', () => showView('main'));
+  if (navAbout) navAbout.addEventListener('click', () => showView('about'));
 }
 
-// Hamburger toggles menu visibility
+// Hamburger toggles menu
 hamburgerBtn.addEventListener('click', () => {
-  // Populate menu if empty (idempotent)
-  if (!mobileMenu.innerHTML.trim()) setupMenu();
-  mobileMenu.hidden = !mobileMenu.hidden;
+  openMenu();
+  setupMenuListeners();
+});
+
+// Overlay click closes menu
+if (menuOverlay) {
+  menuOverlay.addEventListener('click', closeMenu);
+}
+
+// Escape key closes menu
+document.addEventListener('keydown', e => {
+  if (!mobileMenu.hidden && (e.key === 'Escape' || e.key === 'Esc')) {
+    closeMenu();
+  }
 });
 
 // Render main view by default
