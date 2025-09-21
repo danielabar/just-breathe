@@ -46,7 +46,7 @@ describe("startBreathingSession countdown", () => {
     expect(speak).toHaveBeenCalledWith('Breathe in');
   });
 
-  it("calls onDone and stops session when Stop button is clicked", () => {
+  it("calls onDone with completed=false when Stop button is clicked", () => {
     startBreathingSession({
       inSec: 3,
       outSec: 4,
@@ -60,7 +60,32 @@ describe("startBreathingSession countdown", () => {
     // Simulate clicking the Stop button
     stopBtn.click();
 
-    // onDone should be called
-    expect(onDone).toHaveBeenCalled();
+    // onDone should be called with completed: false
+    expect(onDone).toHaveBeenCalledWith({ completed: false });
+  });
+
+  it("calls onDone with completed=true when session completes naturally", () => {
+    // Patch requestAnimationFrame to run immediately
+    global.requestAnimationFrame = (cb) => setTimeout(cb, 0);
+
+    startBreathingSession({
+      inSec: 3,
+      outSec: 4,
+      durationMin: 1 / 60, // very short session for test
+      container,
+      onDone,
+    });
+
+    // Fast-forward countdown
+    vi.advanceTimersByTime(1000 + 1000 + 1000); // countdown
+
+    // Fast-forward session duration (should be very short)
+    vi.advanceTimersByTime(1000); // simulate session start
+
+    // Fast-forward the final out-breath timeout
+    vi.advanceTimersByTime(4000); // outSec * 1000
+
+    // onDone should be called automatically after session completes
+    expect(onDone).toHaveBeenCalledWith({ completed: true });
   });
 });
