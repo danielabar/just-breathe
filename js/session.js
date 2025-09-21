@@ -18,7 +18,6 @@ async function requestWakeLock() {
 export function startBreathingSession({ inSec, outSec, durationMin, container, onDone }) {
   // Helper to call onDone with completed status
   function finishSession(completed) {
-    console.log('[finishSession] called with completed:', completed);
     if (typeof onDone === 'function') {
       onDone({ completed });
     }
