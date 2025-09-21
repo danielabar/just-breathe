@@ -1,5 +1,6 @@
 import { renderMainView } from './main.js';
 import { renderAboutView } from './about.js';
+import { renderHistoryView } from './history.js';
 
 const appView = document.getElementById('app-view');
 const hamburgerBtn = document.getElementById('hamburger-btn');
@@ -27,6 +28,10 @@ function showView(view) {
     const navAbout = document.getElementById('nav-about');
     if (navAbout) navAbout.setAttribute('aria-current', 'page');
     renderAboutView(appView);
+  } else if (view === 'history') {
+    const navHistory = document.getElementById('nav-history');
+    if (navHistory) navHistory.setAttribute('aria-current', 'page');
+    renderHistoryView(appView);
   } else {
     const navMain = document.getElementById('nav-main');
     if (navMain) navMain.setAttribute('aria-current', 'page');
@@ -39,8 +44,10 @@ function showView(view) {
 function setupMenuListeners() {
   const navMain = document.getElementById('nav-main');
   const navAbout = document.getElementById('nav-about');
+  const navHistory = document.getElementById('nav-history');
   if (navMain) navMain.addEventListener('click', () => showView('main'));
   if (navAbout) navAbout.addEventListener('click', () => showView('about'));
+  if (navHistory) navHistory.addEventListener('click', () => showView('history'));
 }
 
 // Hamburger toggles menu
@@ -60,6 +67,14 @@ document.addEventListener('keydown', e => {
     closeMenu();
   }
 });
+
+// Desktop menu listeners
+const navMainDesktop = document.getElementById('nav-main-desktop');
+const navHistoryDesktop = document.getElementById('nav-history-desktop');
+const navAboutDesktop = document.getElementById('nav-about-desktop');
+if (navMainDesktop) navMainDesktop.addEventListener('click', () => showView('main'));
+if (navHistoryDesktop) navHistoryDesktop.addEventListener('click', () => showView('history'));
+if (navAboutDesktop) navAboutDesktop.addEventListener('click', () => showView('about'));
 
 // Render main view by default
 renderMainView(appView);
