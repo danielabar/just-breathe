@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { startBreathingSession } from "./session.js";
 import { speak } from "./voice.js";
+import * as historyStorage from "./historyStorage.js";
 
 // Mock speak to track calls
 vi.mock("./voice.js", () => ({
@@ -46,7 +47,8 @@ describe("startBreathingSession countdown", () => {
     expect(speak).toHaveBeenCalledWith('Breathe in');
   });
 
-  it("calls onDone with completed=false when Stop button is clicked", () => {
+  it("calls onDone with completed=false and saves to history when Stop button is clicked", () => {
+    const saveSessionSpy = vi.spyOn(historyStorage, "saveSessionToHistory");
     startBreathingSession({
       inSec: 3,
       outSec: 4,
@@ -62,9 +64,12 @@ describe("startBreathingSession countdown", () => {
 
     // onDone should be called with completed: false
     expect(onDone).toHaveBeenCalledWith({ completed: false });
+    expect(saveSessionSpy).toHaveBeenCalledWith({ inSec: 3, outSec: 4, duration: 1 });
+    saveSessionSpy.mockRestore();
   });
 
-  it("calls onDone with completed=true when session completes naturally", () => {
+  it("calls onDone with completed=true and saves to history when session completes naturally", () => {
+    const saveSessionSpy = vi.spyOn(historyStorage, "saveSessionToHistory");
     // Patch requestAnimationFrame to run immediately
     global.requestAnimationFrame = (cb) => setTimeout(cb, 0);
 
@@ -87,5 +92,7 @@ describe("startBreathingSession countdown", () => {
 
     // onDone should be called automatically after session completes
     expect(onDone).toHaveBeenCalledWith({ completed: true });
+    expect(saveSessionSpy).toHaveBeenCalledWith({ inSec: 3, outSec: 4, duration: 1 / 60 });
+    saveSessionSpy.mockRestore();
   });
 });
