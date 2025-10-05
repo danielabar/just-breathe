@@ -90,6 +90,14 @@ describe("startBreathingSession countdown", () => {
     // Fast-forward the final out-breath timeout
     vi.advanceTimersByTime(4000); // outSec * 1000
 
+    const stateEl = container.querySelector('#breathing-state');
+    const progressEl = container.querySelector('#progress');
+
+    // Verify "All done!" message and speech
+    expect(stateEl.textContent).toBe('All done!');
+    expect(speak).toHaveBeenCalledWith('All done');
+    expect(progressEl.style.width).toBe('100%');
+
     // onDone should be called automatically after session completes
     expect(onDone).toHaveBeenCalledWith({ completed: true });
     expect(saveSessionSpy).toHaveBeenCalledWith({ inSec: 3, outSec: 4, duration: 1 / 60 });

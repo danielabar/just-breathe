@@ -68,8 +68,11 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
     if (elapsed >= totalMs && state === 'out') {
       running = false;
       setTimeout(() => {
+        stateEl.textContent = 'All done!';
+        speak('All done');
+        progressEl.style.width = '100%';
         finishSession(true);
-        stopBtn.textContent = 'Restart';
+        stopBtn.textContent = "Restart";
         stopBtn.onclick = () => {
           // Optionally restart session here, but do not call finishSession again
         };
