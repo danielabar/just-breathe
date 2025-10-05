@@ -22,7 +22,7 @@ function openMenu() {
   menuOverlay.hidden = false;
 }
 
-function showView(view) {
+export function showView(view, prefillValues = null) {
   clearAriaCurrent();
   if (view === 'about') {
     const navAbout = document.getElementById('nav-about');
@@ -35,7 +35,7 @@ function showView(view) {
   } else {
     const navMain = document.getElementById('nav-main');
     if (navMain) navMain.setAttribute('aria-current', 'page');
-    renderMainView(appView);
+    renderMainView(appView, prefillValues);
   }
   closeMenu();
 }
@@ -78,6 +78,3 @@ if (navAboutDesktop) navAboutDesktop.addEventListener('click', () => showView('a
 
 // Render main view by default
 renderMainView(appView);
-
-// So we can test it
-export { showView };

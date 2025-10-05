@@ -1,4 +1,5 @@
 import { getSessionHistory } from "./historyStorage.js";
+import { showView } from "./index.js";
 
 export function renderHistoryView(container) {
   const history = getSessionHistory();
@@ -16,11 +17,32 @@ export function renderHistoryView(container) {
   const startBtn = container.querySelector("#history-start-btn");
   if (startBtn) {
     startBtn.addEventListener("click", () => {
-      import("./index.js").then((mod) => mod.showView("main"));
+      showView("main");
     });
   }
 
-  // TODO: Add click listeners for history entries in next step
+  // Add click listeners for replay buttons
+  const replayButtons = container.querySelectorAll('.history-replay-btn');
+  replayButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      // Get parent card element that contains session data
+      const card = button.closest('.history-entry-card');
+      if (!card) return;
+
+      // Extract session data from card data attributes
+      const sessionData = {
+        inSec: parseFloat(card.dataset.in),
+        outSec: parseFloat(card.dataset.out),
+        duration: parseInt(card.dataset.duration, 10)
+      };
+
+      // Navigate to main view with prefill values
+      showView("main", sessionData);
+
+      // Prevent event bubbling
+      e.stopPropagation();
+    });
+  });
 }
 
 function renderHistoryList(history) {
