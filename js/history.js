@@ -64,14 +64,29 @@ function renderHistoryList(history) {
             </span>
           </div>
           <div class="history-entry-details-row">
-            <span class="history-inout">
-              <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true" style="vertical-align:middle; margin-right:2px;"><path d="M9 2v14M9 2l-4 4M9 2l4 4" stroke="#3a7c7c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              Inhale <strong>${entry.inSec}s</strong>
-              <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true" style="vertical-align:middle; margin-left:10px; margin-right:2px;"><path d="M9 16V2M9 16l-4-4M9 16l4-4" stroke="#3a7c7c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              Exhale <strong>${entry.outSec}s</strong>
-              <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:middle; margin-left:10px; margin-right:2px;"><circle cx="8" cy="8" r="7" stroke="#3a7c7c" stroke-width="2" fill="none"/><path d="M8 4v4l3 3" stroke="#3a7c7c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-              <strong>${entry.duration} min</strong>
-            </span>
+            <div class="history-params-grid">
+              <div class="history-param">
+                <div class="history-param-icon">
+                  <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v14M9 2l-4 4M9 2l4 4" stroke="#3a7c7c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                </div>
+                <div class="history-param-label">Inhale</div>
+                <div class="history-param-value"><strong>${entry.inSec}s</strong></div>
+              </div>
+              <div class="history-param">
+                <div class="history-param-icon">
+                  <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 16V2M9 16l-4-4M9 16l4-4" stroke="#3a7c7c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                </div>
+                <div class="history-param-label">Exhale</div>
+                <div class="history-param-value"><strong>${entry.outSec}s</strong></div>
+              </div>
+              <div class="history-param">
+                <div class="history-param-icon">
+                  <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="#3a7c7c" stroke-width="2" fill="none"/><path d="M8 4v4l3 3" stroke="#3a7c7c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                </div>
+                <div class="history-param-label">Duration</div>
+                <div class="history-param-value"><strong>${entry.duration} min</strong></div>
+              </div>
+            </div>
           </div>
         </div>
       </li>
