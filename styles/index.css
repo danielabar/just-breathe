@@ -4,6 +4,7 @@
 @import './global.css';
 @import './app.css';
 @import './button.css';
+@import './history.css';
 
 /* TODO: Some of these are also defined in global.css */
 /* Also some styles like cards belong in app.css */
