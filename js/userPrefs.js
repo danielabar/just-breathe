@@ -1,8 +1,7 @@
 // userPrefs.js
 // Utility for saving and loading user breathing preferences
 
-const NAMESPACE = 'justBreathe';
-const PREFS_KEY = `${NAMESPACE}:prefs`;
+import { PREFS_KEY } from './constants.js';
 
 
 export const STANDARD_DURATIONS = [5, 10, 15, 20, 25, 30];

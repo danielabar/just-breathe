@@ -147,4 +147,34 @@ describe("renderMainView", () => {
 
     expect(form.style.display).toBe("none");
   });
+
+  it("loads form with prefillValues when provided", () => {
+    // Override isCustomDuration to return true for our custom duration
+    userPrefs.isCustomDuration.mockImplementation((duration) => duration !== 5 &&
+                                                  duration !== 10 && duration !== 15 &&
+                                                  duration !== 20 && duration !== 25 &&
+                                                  duration !== 30);
+
+    const prefillValues = {
+      inSec: 7.5,
+      outSec: 8.5,
+      duration: 22
+    };
+
+    renderMainView(container, prefillValues);
+
+    const inInput = container.querySelector('input[name="in"]');
+    const outInput = container.querySelector('input[name="out"]');
+    const durationSelect = container.querySelector('select[name="duration"]');
+    const customInput = container.querySelector('input[name="customDuration"]');
+
+    expect(inInput.value).toBe("7.5");
+    expect(outInput.value).toBe("8.5");
+    expect(durationSelect.value).toBe("custom");
+    expect(customInput.style.display).toBe("");
+    expect(customInput.value).toBe("22");
+
+    // Verify loadPrefs was not called when prefillValues are provided
+    expect(userPrefs.loadPrefs).not.toHaveBeenCalled();
+  });
 });

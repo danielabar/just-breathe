@@ -1,4 +1,5 @@
 import { speak } from './voice.js';
+import { saveSessionToHistory } from './historyStorage.js';
 
 // Wake Lock API support
 let wakeLock = null;
@@ -16,6 +17,18 @@ async function requestWakeLock() {
 }
 
 export function startBreathingSession({ inSec, outSec, durationMin, container, onDone }) {
+  // Helper to call onDone with completed status
+  function finishSession(completed) {
+    saveSessionToHistory({
+      inSec,
+      outSec,
+      duration: durationMin
+    });
+    if (typeof onDone === 'function') {
+      // TODO: `completed` is not needed by onDone function but might be useful in saveSessionToHistory
+      onDone({ completed });
+    }
+  }
   // Countdown timing constants
   // const COUNTDOWN_STARTING_PAUSE_MS = 1800; // Pause after "Starting in 3..."
   const COUNTDOWN_STARTING_PAUSE_MS = 1000; // Pause after "Starting in 3..."
@@ -58,8 +71,11 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
         stateEl.textContent = 'All done!';
         speak('All done');
         progressEl.style.width = '100%';
-        stopBtn.textContent = 'Restart';
-        stopBtn.onclick = onDone;
+        finishSession(true);
+        stopBtn.textContent = "Restart";
+        stopBtn.onclick = () => {
+          // Optionally restart session here, but do not call finishSession again
+        };
         // Release wake lock if held
         if (wakeLock && wakeLock.release) {
           wakeLock.release();
@@ -131,7 +147,7 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
 
   stopBtn.onclick = () => {
     running = false;
-    onDone();
+    finishSession(false);
     // Release wake lock if held
     if (wakeLock && wakeLock.release) {
       wakeLock.release();

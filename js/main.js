@@ -1,8 +1,9 @@
 import { startBreathingSession } from './session.js';
 import { loadPrefs, savePrefs, STANDARD_DURATIONS, isCustomDuration } from './userPrefs.js';
 
-export function renderMainView(container) {
-  const prefs = loadPrefs();
+export function renderMainView(container, prefillValues = null) {
+  // Use prefill values if provided, otherwise load user preferences
+  const prefs = prefillValues || loadPrefs();
   container.innerHTML = `
     <div class="main-view-card">
       <div class="instructions">
