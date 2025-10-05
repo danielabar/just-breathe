@@ -33,7 +33,7 @@ function renderHistoryList(history) {
              data-out="${entry.outSec}"
              data-duration="${entry.duration}">
           <button class="history-replay-btn" title="Replay session" tabindex="-1">
-            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14l9-7z" fill="#3a7c7c" stroke="#3a7c7c" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l10-7z" fill="#3a7c7c" stroke="#3a7c7c" stroke-width="1.5" stroke-linejoin="round"/></svg>
             <span class="history-replay-label">Replay</span>
           </button>
           <div class="history-entry-header-row">
