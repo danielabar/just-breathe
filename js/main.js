@@ -26,7 +26,7 @@ export function renderMainView(container, prefillValues = null) {
           </select>
         </label>
         <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:${isCustomDuration(prefs.duration) ? '' : 'none'};" value="${isCustomDuration(prefs.duration) ? prefs.duration : ''}">
-        <button class="app-button" type="submit">Start</button>
+        <button class="btn btn--primary" type="submit">Start</button>
       </form>
       <div id="session-area"></div>
     </div>

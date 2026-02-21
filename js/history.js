@@ -100,7 +100,7 @@ function renderEmptyState() {
   return `
     <div class="history-empty">
       <p>No sessions yet. Your completed sessions will appear here.</p>
-      <button class="app-button" id="history-start-btn">Start a session</button>
+      <button class="btn btn--primary" id="history-start-btn">Start a session</button>
     </div>
   `;
 }
