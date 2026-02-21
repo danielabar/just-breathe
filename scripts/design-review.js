@@ -6,10 +6,11 @@
  *   session-in-progress, history-empty, history, about
  *
  * HOW TO USE:
- *   npm run dev          (keep dev server running in a separate terminal)
- *   node scripts/design-review.js
+ *   npm run dev                           (keep dev server running in a separate terminal)
+ *   node scripts/design-review.js step-10 (saves to scratch/design-update/screenshots/step-10/)
+ *   node scripts/design-review.js         (saves to scratch/design-update/screenshots/run/)
  *
- * Screenshots are saved to scratch/design-update/screenshots/
+ * Screenshots are saved to scratch/design-update/screenshots/<label>/
  *
  * History data is injected via localStorage so timestamps show
  * "Yesterday · ..." and "Feb XX · ..." without waiting for real sessions.
@@ -19,7 +20,8 @@ import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 
 const BASE_URL = 'http://localhost:8080';
-const OUT_DIR  = 'scratch/design-update/screenshots';
+const LABEL    = process.argv[2] ?? 'run';
+const OUT_DIR  = `scratch/design-update/screenshots/${LABEL}`;
 const VIEWPORT = { width: 390, height: 844 };
 
 async function shot(page, name) {

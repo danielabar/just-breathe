@@ -47,18 +47,14 @@
   color: var(--color-text);
 }
 
-.instructions {
-  background: var(--color-accent-light);
-  color: var(--color-accent-dark);
-  border-radius: 1rem;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.instructions strong {
-  font-weight: 600;
+.main-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-text-dim);
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.4;
 }
 
 .progress-bar {

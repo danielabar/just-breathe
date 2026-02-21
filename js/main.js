@@ -6,12 +6,7 @@ export function renderMainView(container, prefillValues = null) {
   const prefs = prefillValues || loadPrefs();
   container.innerHTML = `
     <div class="main-view-card">
-      <div class="instructions">
-        <strong>How it works:</strong><br>
-        Set your preferred breathing pace and session length. When you start, just listen and relax. All prompts are through your device's voice.
-        <br><br>
-        <em>Inhale and exhale gently through your nose. No need to watch the screen.</em>
-      </div>
+      <p class="main-tagline">Set your pace. Close your eyes. Listen.</p>
       <form class="breath-form">
         <label>Breathe in (seconds)
           <input type="number" name="in" min="1" max="15" step="0.1" value="${prefs.inSec}" required>
