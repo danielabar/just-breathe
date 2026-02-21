@@ -6,25 +6,25 @@ vi.mock('./about.js', () => ({ renderAboutView: vi.fn() }));
 import { renderMainView } from './main.js';
 import { renderAboutView } from './about.js';
 
-let showView, navMain, navAbout, appView;
+let showView, tabHome, tabAbout, appView;
 
 describe('showView', () => {
   beforeEach(async () => {
     document.body.innerHTML = `
       <header>
-        <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu"></button>
-        <div id="menu-overlay" class="menu-overlay" hidden></div>
-        <nav id="mobile-menu" class="mobile-menu" hidden>
-          <button id="nav-main" type="button">Home</button>
-          <button id="nav-about" type="button">About</button>
-        </nav>
+        <h1>Just Breathe</h1>
       </header>
       <main>
         <section id="app-view"></section>
       </main>
+      <nav class="tab-bar" aria-label="Main navigation">
+        <button id="tab-home" class="tab-btn" type="button"></button>
+        <button id="tab-history" class="tab-btn" type="button"></button>
+        <button id="tab-about" class="tab-btn" type="button"></button>
+      </nav>
     `;
-    navMain = document.getElementById('nav-main');
-    navAbout = document.getElementById('nav-about');
+    tabHome = document.getElementById('tab-home');
+    tabAbout = document.getElementById('tab-about');
     appView = document.getElementById('app-view');
     renderMainView.mockClear();
     renderAboutView.mockClear();
@@ -36,15 +36,15 @@ describe('showView', () => {
 
   it('renders main view and sets aria-current on Home', () => {
     showView('main');
-    expect(renderMainView).toHaveBeenCalledWith(appView);
-    expect(navMain.getAttribute('aria-current')).toBe('page');
-    expect(navAbout.getAttribute('aria-current')).toBeNull();
+    expect(renderMainView).toHaveBeenCalledWith(appView, null);
+    expect(tabHome.getAttribute('aria-current')).toBe('page');
+    expect(tabAbout.getAttribute('aria-current')).toBe('false');
   });
 
   it('renders about view and sets aria-current on About', () => {
     showView('about');
     expect(renderAboutView).toHaveBeenCalledWith(appView);
-    expect(navAbout.getAttribute('aria-current')).toBe('page');
-    expect(navMain.getAttribute('aria-current')).toBeNull();
+    expect(tabAbout.getAttribute('aria-current')).toBe('page');
+    expect(tabHome.getAttribute('aria-current')).toBe('false');
   });
 });
