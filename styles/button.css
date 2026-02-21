@@ -1,32 +1,57 @@
 @layer components {
 
-.app-button {
-  width: 100%;
-  background: var(--color-accent-dark);
-  color: #fff;
+/* Shared button base */
+.btn {
   border: none;
   border-radius: 1.5rem;
+  font-weight: 600;
+  width: 100%;
+  display: block;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Primary: dark teal, full-width action */
+.btn--primary {
+  background: var(--color-accent-dark);
+  color: #fff;
   padding: 0.7rem 0;
   font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
   margin-top: 0.5rem;
-  transition: background 0.2s;
 }
-.app-button:hover {
+.btn--primary:hover {
   background: var(--color-accent);
 }
 
-.app-button--secondary {
+/* Secondary: outlined, full-width action */
+.btn--secondary {
   background: #fff;
   color: var(--color-accent-dark);
   border: 2px solid var(--color-accent-dark);
+  padding: 0.7rem 0;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
 }
-
-.app-button--secondary:hover {
+.btn--secondary:hover {
   background: var(--color-accent-light);
   color: var(--color-accent-dark);
   border-color: var(--color-accent);
+}
+
+/* Menu: mobile nav drawer button */
+.btn--menu {
+  background: var(--color-accent-light);
+  color: var(--color-accent-dark);
+  padding: 0.9rem 0;
+  font-size: 1.15rem;
+  margin: 0.2rem 0;
+}
+.btn--menu[aria-current="page"] {
+  background: var(--color-accent-dark);
+  color: #fff;
+}
+.btn--menu:hover {
+  background: var(--color-accent);
+  color: #fff;
 }
 
 } /* end @layer components */

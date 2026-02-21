@@ -101,7 +101,7 @@ async function run() {
   await page.goto(BASE_URL);
   await page.waitForSelector('.main-view-card');
   await page.selectOption('select[name="duration"]', '5');
-  await page.click('button.app-button[type="submit"]');
+  await page.click('button[type="submit"]');
   await page.waitForSelector('#stop-btn');
   await page.waitForFunction(() => {
     const el = document.getElementById('breathing-state');
