@@ -13,7 +13,7 @@
 /* Primary: dark teal, full-width action */
 .btn--primary {
   background: var(--color-accent-dark);
-  color: #fff;
+  color: var(--color-card);
   padding: 0.7rem 0;
   font-size: 1.1rem;
   margin-top: 0.5rem;
@@ -24,7 +24,7 @@
 
 /* Secondary: outlined, full-width action */
 .btn--secondary {
-  background: #fff;
+  background: var(--color-card);
   color: var(--color-accent-dark);
   border: 2px solid var(--color-accent-dark);
   padding: 0.7rem 0;
@@ -47,11 +47,11 @@
 }
 .btn--menu[aria-current="page"] {
   background: var(--color-accent-dark);
-  color: #fff;
+  color: var(--color-card);
 }
 .btn--menu:hover {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-card);
 }
 
 } /* end @layer components */

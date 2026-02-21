@@ -10,4 +10,7 @@
   --color-border: #e0e0e0;
   --color-success: #7fd47f;
   --color-danger: #e57373;
+  --color-text-muted: #888;
+  --color-progress-track: #e0f7fa;
+  --color-input-bg: #f9f9f9;
 }
