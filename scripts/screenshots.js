@@ -89,8 +89,12 @@ async function run() {
   // Countdown state — captured immediately after clicking Start.
   // session.js shows "Starting in 3...", "2...", "1..." in #breathing-state before the
   // session loop begins. The progress bar track is visible but unfilled at this point.
+  //
+  // We set duration to 5 minutes (the shortest standard option) so that the same wait
+  // time produces more visible progress bar fill — 30s at 5min = 10% vs 5% at 10min.
   await page.goto(BASE_URL);
   await page.waitForSelector('.main-view-card');
+  await page.selectOption('select[name="duration"]', '5');
   await page.click('button.app-button[type="submit"]');
   await page.waitForSelector('#stop-btn');
   await page.waitForFunction(() => {
@@ -107,10 +111,9 @@ async function run() {
   }, { timeout: 10000 });
   await capture(page, 'session-just-started');
 
-  // Session in progress — wait ~60s so the progress bar shows visible fill.
-  // With the default 10-minute session, 60s = ~10% progress, which is clearly visible.
-  // Shorter waits produce a sliver too thin to confirm visually in a screenshot.
-  await page.waitForTimeout(60000);
+  // Session in progress — wait ~30s so the progress bar shows visible fill.
+  // With a 5-minute session, 30s = ~10% progress, which is clearly visible.
+  await page.waitForTimeout(30000);
   await capture(page, 'session-in-progress');
 
   // Stop the session early — session.js saves to history immediately on stop,
