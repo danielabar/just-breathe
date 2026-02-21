@@ -7,9 +7,23 @@ const hamburgerBtn = document.getElementById('hamburger-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 const menuOverlay = document.getElementById('menu-overlay');
 
+const tabHome    = document.getElementById('tab-home');
+const tabHistory = document.getElementById('tab-history');
+const tabAbout   = document.getElementById('tab-about');
+
 function clearAriaCurrent() {
   const btns = mobileMenu.querySelectorAll('button');
   btns.forEach(btn => btn.removeAttribute('aria-current'));
+  [tabHome, tabHistory, tabAbout].forEach(btn => {
+    if (btn) btn.removeAttribute('aria-current');
+  });
+}
+
+function setActiveTab(name) {
+  const map = { main: tabHome, history: tabHistory, about: tabAbout };
+  Object.entries(map).forEach(([key, el]) => {
+    if (el) el.setAttribute('aria-current', key === name ? 'page' : 'false');
+  });
 }
 
 function closeMenu() {
@@ -27,14 +41,17 @@ export function showView(view, prefillValues = null) {
   if (view === 'about') {
     const navAbout = document.getElementById('nav-about');
     if (navAbout) navAbout.setAttribute('aria-current', 'page');
+    setActiveTab('about');
     renderAboutView(appView);
   } else if (view === 'history') {
     const navHistory = document.getElementById('nav-history');
     if (navHistory) navHistory.setAttribute('aria-current', 'page');
+    setActiveTab('history');
     renderHistoryView(appView);
   } else {
     const navMain = document.getElementById('nav-main');
     if (navMain) navMain.setAttribute('aria-current', 'page');
+    setActiveTab('main');
     renderMainView(appView, prefillValues);
   }
   closeMenu();
@@ -76,5 +93,10 @@ if (navMainDesktop) navMainDesktop.addEventListener('click', () => showView('mai
 if (navHistoryDesktop) navHistoryDesktop.addEventListener('click', () => showView('history'));
 if (navAboutDesktop) navAboutDesktop.addEventListener('click', () => showView('about'));
 
+// Tab bar listeners
+if (tabHome)    tabHome.addEventListener('click',    () => showView('main'));
+if (tabHistory) tabHistory.addEventListener('click', () => showView('history'));
+if (tabAbout)   tabAbout.addEventListener('click',   () => showView('about'));
+
 // Render main view by default
-renderMainView(appView);
+showView('main');
