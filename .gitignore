@@ -24,3 +24,6 @@ coverage/
 
 # My work folder
 work
+
+# AI Assistant files
+.claude/settings.local.json
