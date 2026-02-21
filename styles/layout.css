@@ -1,3 +1,5 @@
+@layer base {
+
 html, body {
 	width: 100%;
 	min-height: 100vh;
@@ -93,3 +95,5 @@ hr {
 	border-top: 1px solid var(--color-border);
 	margin: 1.5rem 0 1rem 0;
 }
+
+} /* end @layer base */

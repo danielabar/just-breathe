@@ -1,3 +1,4 @@
+@layer components {
 
 .main-view-card, .about-view-card {
   background: var(--color-card);
@@ -56,7 +57,8 @@
 }
 
 .instructions strong {
-  font-weight: 600;}
+  font-weight: 600;
+}
 
 .progress-bar {
   width: 100%;
@@ -88,3 +90,5 @@
   font-size: 1.2rem;
   margin-top: 2rem;
 }
+
+} /* end @layer components */

@@ -1,3 +1,5 @@
+@layer components {
+
 /* History view styles for Just Breathe app */
 
 /* Row for details and replay button */
@@ -172,3 +174,5 @@
 #history-start-btn {
   margin-top: 1.2rem;
 }
+
+} /* end @layer components */

@@ -1,3 +1,5 @@
+@layer components {
+
 .app-button {
   width: 100%;
   background: var(--color-accent-dark);
@@ -26,3 +28,5 @@
   color: var(--color-accent-dark);
   border-color: var(--color-accent);
 }
+
+} /* end @layer components */

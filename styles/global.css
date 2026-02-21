@@ -1,3 +1,5 @@
+@layer components {
+
 /* Hamburger button styles */
 .hamburger-btn {
   width: 48px;
@@ -147,3 +149,5 @@ nav button:hover {
   margin-left: auto;
   margin-right: auto;
 }
+
+} /* end @layer components */
