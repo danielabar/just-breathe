@@ -44,6 +44,7 @@
   border-radius: 0.5rem;
   font-size: 1.1rem;
   background: var(--color-input-bg);
+  color: var(--color-text);
 }
 
 .instructions {
