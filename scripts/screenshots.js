@@ -59,6 +59,12 @@ async function run() {
   await page.waitForSelector('.main-view-card');
   await capture(page, 'main');
 
+  // Main view with custom duration — selecting "Custom" from the duration dropdown
+  // reveals a hidden text input for entering an arbitrary minute value.
+  await page.selectOption('select[name="duration"]', 'custom');
+  await page.waitForSelector('input[name="customDuration"]:visible');
+  await capture(page, 'main-custom-duration');
+
   // History view (empty) — the state before any sessions have been completed.
   // This looks different from the populated history view so both are worth capturing.
   await page.goto(BASE_URL);
