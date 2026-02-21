@@ -1,8 +1,8 @@
 @layer reset, base, components, utilities;
 
 @import './fonts.css';
-@import './reset.css';
 @import './variables.css';
+@import './reset.css';
 @import './global.css';
 @import './app.css';
 @import './button.css';
