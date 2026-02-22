@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHistoryView } from './history.js';
+import { formatSessionDate } from './formatDate.js';
 
 // Mock dependencies
 vi.mock('./historyStorage.js', () => ({
@@ -100,7 +101,7 @@ describe('renderHistoryView', () => {
     // Verify the timestamp is formatted
     const timeDisplay = container.querySelector('.history-entry-time');
     expect(timeDisplay).not.toBeNull();
-    expect(timeDisplay.textContent.trim()).toBe(new Date(mockHistoryItem.timestamp).toLocaleString());
+    expect(timeDisplay.textContent.trim()).toBe(formatSessionDate(mockHistoryItem.timestamp));
   });
 
   it('renders multiple history items in correct order (newest first)', () => {
@@ -123,9 +124,9 @@ describe('renderHistoryView', () => {
 
     // Verify the order is correct (newest first) by checking timestamps
     const timeDisplays = container.querySelectorAll('.history-entry-time');
-    expect(timeDisplays[0].textContent.trim()).toBe(new Date(mockHistoryItems[0].timestamp).toLocaleString());
-    expect(timeDisplays[1].textContent.trim()).toBe(new Date(mockHistoryItems[1].timestamp).toLocaleString());
-    expect(timeDisplays[2].textContent.trim()).toBe(new Date(mockHistoryItems[2].timestamp).toLocaleString());
+    expect(timeDisplays[0].textContent.trim()).toBe(formatSessionDate(mockHistoryItems[0].timestamp));
+    expect(timeDisplays[1].textContent.trim()).toBe(formatSessionDate(mockHistoryItems[1].timestamp));
+    expect(timeDisplays[2].textContent.trim()).toBe(formatSessionDate(mockHistoryItems[2].timestamp));
   });
 
   // REPLAY BUTTON TESTS
