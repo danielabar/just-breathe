@@ -6,27 +6,28 @@ export function renderMainView(container, prefillValues = null) {
   const prefs = prefillValues || loadPrefs();
   container.innerHTML = `
     <div class="main-view-card">
-      <div class="instructions">
-        <strong>How it works:</strong><br>
-        Set your preferred breathing pace and session length. When you start, just listen and relax. All prompts are through your device's voice.
-        <br><br>
-        <em>Inhale and exhale gently through your nose. No need to watch the screen.</em>
-      </div>
+      <p class="main-tagline">Set your pace. Close your eyes. Listen.</p>
       <form class="breath-form">
-        <label>Breathe in (seconds)
-          <input type="number" name="in" min="1" max="15" step="0.1" value="${prefs.inSec}" required>
+        <label>Breathe in
+          <div class="input-with-unit">
+            <input type="number" name="in" min="1" max="15" step="0.1" value="${prefs.inSec}" required>
+            <span class="input-unit">sec</span>
+          </div>
         </label>
-        <label>Breathe out (seconds)
-          <input type="number" name="out" min="1" max="15" step="0.1" value="${prefs.outSec}" required>
+        <label>Breathe out
+          <div class="input-with-unit">
+            <input type="number" name="out" min="1" max="15" step="0.1" value="${prefs.outSec}" required>
+            <span class="input-unit">sec</span>
+          </div>
         </label>
-        <label>Duration (minutes)
+        <label>Duration
           <select name="duration">
-            ${STANDARD_DURATIONS.map(d => `<option value="${d}"${prefs.duration === d ? ' selected' : ''}>${d}</option>`).join('')}
+            ${STANDARD_DURATIONS.map(d => `<option value="${d}"${prefs.duration === d ? ' selected' : ''}>${d} minutes</option>`).join('')}
             <option value="custom"${isCustomDuration(prefs.duration) ? ' selected' : ''}>Custom</option>
           </select>
         </label>
         <input type="number" name="customDuration" min="1" max="180" step="1" placeholder="Custom (minutes)" style="display:${isCustomDuration(prefs.duration) ? '' : 'none'};" value="${isCustomDuration(prefs.duration) ? prefs.duration : ''}">
-        <button class="btn btn--primary" type="submit">Start</button>
+        <button class="btn btn--primary" type="submit">Begin Session</button>
       </form>
       <div id="session-area"></div>
     </div>
@@ -64,5 +65,6 @@ export function renderMainView(container, prefillValues = null) {
       onDone: () => renderMainView(container)
     });
     form.style.display = 'none';
+    container.querySelector('.main-tagline').style.display = 'none';
   });
 }

@@ -4,54 +4,79 @@
 .btn {
   border: none;
   border-radius: 1.5rem;
+  font-family: var(--font-main);
   font-weight: 600;
   width: 100%;
   display: block;
-  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Primary: dark teal, full-width action */
+/* Primary: accent, full-width action with glow */
 .btn--primary {
   background: var(--color-accent-dark);
-  color: var(--color-card);
-  padding: 0.7rem 0;
-  font-size: 1.1rem;
-  margin-top: 0.5rem;
+  color: var(--color-text);
+  padding: 0.85rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 12px;
+  margin-top: 0.6rem;
+  box-shadow: 0 0 24px var(--color-accent-glow), 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 .btn--primary:hover {
   background: var(--color-accent);
+  box-shadow: 0 0 32px var(--color-accent-glow), 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
-/* Secondary: outlined, full-width action */
+/* Secondary: ghost style for stop/cancel actions */
 .btn--secondary {
-  background: var(--color-card);
-  color: var(--color-accent-dark);
-  border: 2px solid var(--color-accent-dark);
-  padding: 0.7rem 0;
-  font-size: 1.1rem;
+  background: none;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-lit);
+  border-radius: 10px;
+  padding: 0.6rem 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   margin-top: 0.5rem;
 }
 .btn--secondary:hover {
-  background: var(--color-accent-light);
-  color: var(--color-accent-dark);
-  border-color: var(--color-accent);
+  background: var(--color-surface);
+  border-color: var(--color-border-lit);
+  color: var(--color-text-dim);
 }
 
-/* Menu: mobile nav drawer button */
-.btn--menu {
-  background: var(--color-accent-light);
-  color: var(--color-accent-dark);
-  padding: 0.9rem 0;
-  font-size: 1.15rem;
-  margin: 0.2rem 0;
+/* Replay: small circular icon button used on history entries */
+.btn--replay {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  border: 1px solid var(--color-accent-dark);
+  border-radius: 2rem;
+  background: var(--color-accent-subtle);
+  color: var(--color-accent);
+  font-size: 0.92rem;
 }
-.btn--menu[aria-current="page"] {
+.btn--replay:hover {
   background: var(--color-accent-dark);
-  color: var(--color-card);
+  color: white;
+  border-color: var(--color-accent-dark);
+  transform: scale(1.08);
 }
-.btn--menu:hover {
-  background: var(--color-accent);
-  color: var(--color-card);
+.btn--replay:hover svg path {
+  fill: white;
+  stroke: white;
 }
+.btn--replay svg {
+  position: relative;
+  left: 1px; /* slight adjustment to visually center the triangle icon */
+}
+
 
 } /* end @layer components */

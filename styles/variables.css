@@ -1,16 +1,25 @@
 :root {
-  --font-main: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-main:    'Manrope', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Mono', 'Menlo', monospace;
-  --color-bg: #f6f7f9;
-  --color-text: #444;
-  --color-accent: #6bb7b7;
-  --color-accent-light: #b2e0e0;
-  --color-accent-dark: #3a7c7c;
-  --color-card: #fff;
-  --color-border: #e0e0e0;
-  --color-success: #7fd47f;
-  --color-danger: #e57373;
-  --color-text-muted: #888;
-  --color-progress-track: #e0f7fa;
-  --color-input-bg: #f9f9f9;
+  --color-bg:             #0c1219;
+  --color-surface:        rgba(255, 255, 255, 0.04);
+  --color-border:         rgba(255, 255, 255, 0.08);
+  --color-border-lit:     rgba(255, 255, 255, 0.14);
+  --color-text:           #deeede;
+  --color-text-dim:       rgba(222, 238, 222, 0.55);
+  --color-text-muted:     rgba(222, 238, 222, 0.32);
+  --color-accent:         #7db891;
+  --color-accent-dark:    #4a7a5a;
+  --color-accent-light:   rgba(125, 184, 145, 0.18);
+  --color-accent-glow:    rgba(125, 184, 145, 0.22);
+  --color-card:           rgba(255, 255, 255, 0.04);
+  --color-success:        #7db891;
+  --color-danger:         #e57373;
+  --color-progress-track: rgba(125, 184, 145, 0.12);
+  --color-input-bg:       rgba(255, 255, 255, 0.05);
+  --color-accent-border:  rgba(125, 184, 145, 0.3);
+  --color-accent-subtle:  rgba(125, 184, 145, 0.08);
+  --color-surface-hover:  rgba(255, 255, 255, 0.07);
+  --color-bg-opaque:      rgba(10, 15, 20, 0.97);
 }

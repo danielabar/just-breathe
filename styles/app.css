@@ -1,10 +1,7 @@
 @layer components {
 
 .main-view-card, .about-view-card {
-  background: var(--color-card);
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.04);
-  padding: 2rem 16px 2.5rem 16px;
-  min-height: 350px;
+  padding: 1.6rem 1.5rem 2.5rem 1.5rem;
   margin: 0;
   border-radius: 0;
   box-sizing: border-box;
@@ -12,9 +9,17 @@
   max-width: 100vw;
 }
 
+.about-view-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  margin: 1rem;
+  width: calc(100vw - 2rem);
+  max-width: calc(100vw - 2rem);
+}
+
 @media (min-width: 600px) {
   .main-view-card, .about-view-card {
-    min-height: 420px;
     width: 100%;
     max-width: 420px;
     margin: 2rem auto 0 auto;
@@ -24,64 +29,149 @@
   }
 }
 
-.main-view-card h2, .about-view-card h2 {
+.main-view-card h2 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: var(--color-accent-dark);
+  color: var(--color-text);
+}
+
+.about-view-card h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.55rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  letter-spacing: 0.03em;
 }
 
 .breath-form label {
   display: block;
-  margin-bottom: 0.5rem;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.4rem;
   font-weight: 500;
 }
 .breath-form input, .breath-form select {
   width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1.2rem;
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 1.1rem;
   margin-top: 0.3rem;
   border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
-  font-size: 1.1rem;
-  background: var(--color-input-bg);
-}
-
-.instructions {
-  background: var(--color-accent-light);
-  color: var(--color-accent-dark);
-  border-radius: 1rem;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
+  border-radius: 10px;
   font-size: 1rem;
-  line-height: 1.5;
+  background: var(--color-input-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  appearance: none;
+  -webkit-appearance: none;
+}
+.breath-form input:focus, .breath-form select:focus {
+  outline: none;
+  border-color: var(--color-accent-dark);
+  box-shadow: 0 0 0 3px var(--color-accent-glow);
 }
 
-.instructions strong {
-  font-weight: 600;
+.input-with-unit {
+  position: relative;
+  margin-bottom: 1.1rem;
+  margin-top: 0.3rem;
+}
+
+.input-with-unit input {
+  padding-right: 2.8rem;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.input-unit {
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  margin-bottom: 0;
+}
+
+.main-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-text-dim);
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.65;
+  letter-spacing: 0.02em;
 }
 
 .progress-bar {
   width: 100%;
-  height: 18px;
+  height: 3px;
   background: var(--color-progress-track);
-  border-radius: 1rem;
-  margin: 1.5rem 0 2rem 0;
-  overflow: hidden;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.03);
+  border-radius: 2px;
+  overflow: visible;
+  margin: 1.5rem 0;
 }
 .progress {
   height: 100%;
+  border-radius: 2px;
   background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent));
-  border-radius: 1rem 0 0 1rem;
-  transition: width 0.4s cubic-bezier(.4,2,.6,1);
+  box-shadow: 0 0 8px var(--color-accent-glow);
+  transition: width 0.1s linear;
 }
 
 .breathing-state {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  letter-spacing: 0.02em;
   text-align: center;
-  font-size: 1.3rem;
   margin-bottom: 1.2rem;
-  color: var(--color-accent-dark);
+  color: var(--color-text);
   min-height: 2.2em;
+}
+
+.about-view-card p {
+  font-size: 0.85rem;
+  line-height: 1.75;
+  color: var(--color-text-dim);
+  margin-bottom: 0.9rem;
+}
+
+.about-view-card p:last-child {
+  margin-bottom: 0;
+}
+
+.about-view-card a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-accent-border);
+}
+
+.about-view-card a:hover {
+  color: var(--color-text);
+}
+
+.about-credit {
+  margin-top: 2rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.about-credit a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-accent-border);
+}
+
+.about-credit a:hover {
+  color: var(--color-text);
 }
 
 .completed {

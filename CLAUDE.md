@@ -37,7 +37,7 @@ The app uses a simple view system managed by `js/index.js`:
 - **History view** (`history.js`): Display of past 10 sessions with ability to restart
 - **About view** (`about.js`): Static informational content
 
-Views are switched by calling `showView(viewName)` which clears the `#app-view` container and renders the requested view. Navigation is handled via hamburger menu (mobile) and desktop nav buttons.
+Views are switched by calling `showView(viewName)` which clears the `#app-view` container and renders the requested view. Navigation is handled via a fixed bottom tab bar (`.tab-bar` / `.tab-btn` in `styles/tab-bar.css`).
 
 ### Session Flow
 1. User configures breathing parameters (inhale/exhale seconds, duration) in main view
@@ -73,15 +73,31 @@ All JavaScript is in `js/` directory as ES6 modules:
 - `constants.js` - Shared localStorage keys and namespace
 
 ### Styling
-Styles in `styles/` directory:
-- `reset.css` - Browser reset
-- `variables.css` - CSS custom properties (colors, spacing)
-- `fonts.css` - Font definitions
-- `global.css` - Global styles (body, header, footer, menu)
-- `app.css` - View cards and form styles
-- `button.css` - Button component styles
-- `history.css` - History view specific styles
-- `index.css` - Imports all stylesheets
+
+Full architecture documented in `docs/css-architecture.md`. Key rules to follow:
+
+**File inventory** (`styles/` directory):
+- `index.css` — entry point: layer declaration + imports only, no rules
+- `fonts.css` — `@font-face` declarations, outside layers
+- `variables.css` — all CSS custom properties (`--color-*`, `--font-*`), outside layers
+- `reset.css` — browser normalisation (`@layer reset`)
+- `layout.css` — `html`, `body`, `header`, `main`, `footer`, `#app-view` (`@layer base`)
+- `global.css` — form container alignment (`@layer components`)
+- `app.css` — view cards, form inputs, progress bar, about view (`@layer components`)
+- `button.css` — `.btn` base class + all `.btn--*` variants (`@layer components`)
+- `history.css` — history entries, replay button, empty state (`@layer components`)
+- `tab-bar.css` — bottom tab navigation (`@layer components`)
+- `session.css` — orb animation, session screen layout (`@layer components`)
+
+**Layer priority** (lowest → highest): `reset` → `base` → `components` → `utilities`
+
+**Rules — always follow these:**
+1. **No hardcoded colors.** Every color value must use `var(--color-*)` from `variables.css`. Add a new token there before using it anywhere else.
+2. **All buttons use `.btn`.** Every button in HTML/JS must have the `btn` class. New button styles are `.btn--variant` classes added to `button.css` only — never style a button from scratch in a component file.
+3. **New view or widget → new file.** Create `styles/my-component.css`, wrap content in `@layer components { }`, add one `@import` line to `index.css`. Do not add component styles to existing files that own a different concern.
+4. **`index.css` contains no rules.** It only declares layers and imports other files.
+5. **`variables.css` contains no rules.** Only `:root { }` custom property declarations.
+6. **Wrap all new component CSS in `@layer components { }`.** The only exceptions are `@font-face` (stays outside layers) and `@keyframes` (must be outside layers for browser compatibility — see `session.css`).
 
 ## Testing Conventions
 
