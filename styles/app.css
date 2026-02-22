@@ -81,6 +81,21 @@
   min-height: 2.2em;
 }
 
+.about-credit {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.about-credit a {
+  color: var(--color-text-dim);
+  text-decoration: none;
+}
+
+.about-credit a:hover {
+  color: var(--color-accent);
+}
+
 .completed {
   text-align: center;
   color: var(--color-success);
