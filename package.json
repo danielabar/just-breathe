@@ -4,7 +4,7 @@
   "description": "A minimal, science-based breathing meditation app built with vanilla web technologies - no ads, no accounts, just simple guided breathing.",
   "main": "index.js",
   "scripts": {
-    "dev": "http-server -c-1",
+    "dev": "http-server -c-1 -a 0.0.0.0",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage && open coverage/index.html",

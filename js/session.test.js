@@ -43,7 +43,7 @@ describe("startBreathingSession countdown", () => {
     // Advance timers for '1' pause
     vi.advanceTimersByTime(1000); // COUNTDOWN_NUMBER_PAUSE_MS
     // After countdown, should start session
-    expect(stateEl.textContent).toBe('Breathe in');
+    expect(stateEl.textContent).toBe('breathe in');
     expect(speak).toHaveBeenCalledWith('Breathe in');
   });
 

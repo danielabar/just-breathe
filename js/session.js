@@ -41,10 +41,15 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   let breathMs;
   let sessionStart;
   container.innerHTML = `
+    <div class="orb-container" id="orb-container" style="--orb-duration: ${inSec + outSec}s">
+      <div class="orb-ring"></div>
+      <div class="orb-core"></div>
+    </div>
     <div class="breathing-state" id="breathing-state"></div>
     <div class="progress-bar"><div class="progress" id="progress"></div></div>
     <button id="stop-btn" class="btn btn--secondary">Stop</button>
   `;
+  const orbContainer = container.querySelector('#orb-container');
   const stateEl = container.querySelector('#breathing-state');
   const progressEl = container.querySelector('#progress');
   const stopBtn = container.querySelector('#stop-btn');
@@ -63,7 +68,7 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
       breathStart = Date.now();
       breathMs = outSec * 1000;
       speak('Breathe out');
-      stateEl.textContent = 'Breathe out';
+      stateEl.textContent = 'breathe out';
     }
     if (elapsed >= totalMs && state === 'out') {
       running = false;
@@ -91,13 +96,15 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
       if (state === 'in') {
         state = 'out';
         breathMs = outSec * 1000;
+        orbContainer.dataset.state = 'out';
         speak('Breathe out');
-        stateEl.textContent = 'Breathe out';
+        stateEl.textContent = 'breathe out';
       } else {
         state = 'in';
         breathMs = inSec * 1000;
+        orbContainer.dataset.state = 'in';
         speak('Breathe in');
-        stateEl.textContent = 'Breathe in';
+        stateEl.textContent = 'breathe in';
       }
       breathStart = Date.now();
     }
@@ -125,8 +132,9 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
       breathMs = inSec * 1000;
       sessionStart = Date.now();
       breathStart = Date.now();
+      orbContainer.dataset.state = 'in';
       speak('Breathe in');
-      stateEl.textContent = 'Breathe in';
+      stateEl.textContent = 'breathe in';
       requestAnimationFrame(updateState);
       return;
     }
