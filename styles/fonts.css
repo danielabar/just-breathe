@@ -1,15 +1,25 @@
+/* Self-hosted latin subsets from Google Fonts */
+
 @font-face {
-  font-family: 'Inter';
-  src: url('../assets/fonts/InterVariable.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'Cormorant Garamond';
+  src: url('../assets/fonts/CormorantGaramond.woff2') format('woff2');
+  font-weight: 300 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('../assets/fonts/InterVariable-Italic.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'Cormorant Garamond';
+  src: url('../assets/fonts/CormorantGaramond-Italic.woff2') format('woff2');
+  font-weight: 300 600;
   font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('../assets/fonts/ManropeVariable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
   font-display: swap;
 }

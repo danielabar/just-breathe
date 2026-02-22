@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c1219">
   <title>Just Breathe</title>
   <meta name="description" content="A simple, relaxing breathing meditation app inspired by science.">
 
@@ -19,28 +20,32 @@
 <body>
     <header>
       <h1>Just Breathe</h1>
-      <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu">
-        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
-          <rect y="6" width="28" height="3" rx="1.5" fill="#fff"/>
-          <rect y="13" width="28" height="3" rx="1.5" fill="#fff"/>
-          <rect y="20" width="28" height="3" rx="1.5" fill="#fff"/>
-        </svg>
-      </button>
-      <div id="menu-overlay" class="menu-overlay" hidden></div>
-      <nav id="mobile-menu" class="mobile-menu" hidden>
-        <button id="nav-main" type="button" class="btn btn--menu">Home</button>
-        <button id="nav-history" type="button" class="btn btn--menu">History</button>
-        <button id="nav-about" type="button" class="btn btn--menu">About</button>
-      </nav>
     </header>
   <main>
     <section id="app-view"></section>
   </main>
-  <footer>
-    <hr />
-    <div class="contact">
-      <a href="https://danielabaron.me/">Website</a>
-    </div>
-  </footer>
+  <nav class="tab-bar" aria-label="Main navigation">
+    <button id="tab-home"    class="tab-btn" type="button" aria-current="page">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 12L12 3l9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Home</span>
+    </button>
+    <button id="tab-history" class="tab-btn" type="button">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>History</span>
+    </button>
+    <button id="tab-about"   class="tab-btn" type="button">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M12 11v6M12 8v.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>About</span>
+    </button>
+  </nav>
 </body>
 </html>

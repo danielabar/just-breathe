@@ -10,9 +10,10 @@ describe('renderAboutView', () => {
 
   it('renders the about view content', () => {
     renderAboutView(container);
-    expect(container.innerHTML).toContain('Why Breathe Easy?');
+    expect(container.innerHTML).toContain('Why breathe this way?');
     expect(container.innerHTML).toContain('James Nestor');
-    expect(container.querySelector('.instructions')).not.toBeNull();
-    expect(container.querySelector('a')).not.toBeNull();
+    expect(container.querySelector('.about-view-card')).not.toBeNull();
+    expect(container.querySelector('.about-credit')).not.toBeNull();
+    expect(container.querySelectorAll('a').length).toBeGreaterThanOrEqual(3);
   });
 });
