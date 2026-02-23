@@ -1,0 +1,44 @@
+/*
+ * Utility classes.
+ *
+ * Modelled on the csscaffold project by robzolkos:
+ * https://github.com/robzolkos/csscaffold
+ *
+ * The `utilities` layer is declared last in index.css, which means any class
+ * here will always win over component styles — no need for !important or
+ * increased selector specificity. This is the intended escape hatch for
+ * one-off overrides and reusable single-property helpers.
+ *
+ * Rules for adding utilities:
+ * - One concern per class (e.g. .sr-only, .mx-auto, .uppercase)
+ * - No component-specific logic here — if it only makes sense in one place,
+ *   it belongs in that component's CSS file
+ * - Add the token to variables.css first if a new colour or value is needed
+ */
+@layer utilities {
+  /* Text */
+
+  /* Flexbox and Grid */
+
+  /* Sizing */
+
+  /* Overflow */
+
+  /* Padding */
+
+  /* Margins */
+
+  /* Position */
+
+  /* Fills */
+
+  /* Borders */
+
+  /* Shadows */
+
+  /* Lists */
+
+  /* Accessibility */
+
+  /* Visibility */
+}

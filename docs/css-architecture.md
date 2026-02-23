@@ -70,6 +70,7 @@ styles/
   history.css     ← history entries, replay btn         [@layer components]
   tab-bar.css     ← bottom tab navigation               [@layer components]
   session.css     ← breathing orb, session screen       [@layer components]
+  utilities.css   ← utility overrides (text, layout, visibility helpers) [@layer utilities]
 ```
 
 ```mermaid
@@ -92,10 +93,14 @@ graph TD
     subgraph components_layer ["@layer components"]
         global["global.css\nform container alignment"]
         app["app.css\nview cards · inputs · about view"]
-        button["button.css\n.btn base + .btn--primary · --secondary · --replay"]
+        button["button.css\n.btn base + .btn--primary · --secondary · --replay-pill"]
         history["history.css\nhistory entries · replay btn · empty state"]
         tabbar["tab-bar.css\nbottom tab navigation"]
         session["session.css\nbreathing orb · session screen"]
+    end
+
+    subgraph utilities_layer ["@layer utilities"]
+        utilities["utilities.css\ntext · layout · accessibility · visibility helpers"]
     end
 
     idx --> fonts
@@ -108,6 +113,7 @@ graph TD
     idx --> history
     idx --> tabbar
     idx --> session
+    idx --> utilities
 ```
 
 ---
@@ -187,9 +193,9 @@ All buttons in the app share a base class with variants:
 .btn { ... }
 
 /* Variants — added alongside .btn */
-.btn--primary   { /* solid accent, main CTA */ }
-.btn--secondary { /* ghost/outlined, secondary action */ }
-.btn--replay    { /* small circular icon button, history entries */ }
+.btn--primary      { /* solid accent, main CTA */ }
+.btn--secondary    { /* ghost/outlined, secondary action */ }
+.btn--replay-pill  { /* solid green pill button in history card band */ }
 ```
 
 Usage in HTML/JS templates:
