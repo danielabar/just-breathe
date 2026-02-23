@@ -96,7 +96,7 @@ describe('renderHistoryView', () => {
     expect(content).toContain('4s');
     expect(content).toContain('Exhale');
     expect(content).toContain('6s');
-    expect(content).toContain('10 min');
+    expect(content).toContain('10m');
 
     // Verify the timestamp is formatted
     const timeDisplay = container.querySelector('.history-entry-time');

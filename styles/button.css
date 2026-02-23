@@ -49,33 +49,28 @@
   color: var(--color-text-dim);
 }
 
-/* Replay: small circular icon button used on history entries */
-.btn--replay {
+/* Replay pill: solid accent pill used in the history card band */
+.btn--replay-pill {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 2.2rem;
-  height: 2.2rem;
-  padding: 0;
-  border: 1px solid var(--color-accent-dark);
-  border-radius: 2rem;
-  background: var(--color-accent-subtle);
-  color: var(--color-accent);
-  font-size: 0.92rem;
+  gap: 0.4rem;
+  width: auto; /* override .btn default: width: 100% */
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  border: none;
+  border-radius: 999px;
+  padding: 0.38rem 0.8rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  min-height: 32px;
+  transition: opacity 0.15s, transform 0.1s;
+  flex-shrink: 0;
 }
-.btn--replay:hover {
-  background: var(--color-accent-dark);
-  color: white;
-  border-color: var(--color-accent-dark);
-  transform: scale(1.08);
-}
-.btn--replay:hover svg path {
-  fill: white;
-  stroke: white;
-}
-.btn--replay svg {
-  position: relative;
-  left: 1px; /* slight adjustment to visually center the triangle icon */
+.btn--replay-pill:hover {
+  opacity: 0.88;
+  transform: scale(0.98);
 }
 
 
