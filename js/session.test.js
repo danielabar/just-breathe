@@ -3,9 +3,12 @@ import { startBreathingSession } from "./session.js";
 import { speak } from "./voice.js";
 import * as historyStorage from "./historyStorage.js";
 
-// Mock speak to track calls
+// Mock voice.js — speak tracks calls and immediately fires 'end' so speakAndWait
+// callbacks are driven by fake timers rather than real speech synthesis events.
+// cancelVoice is a no-op spy; session.js calls it on stop.
 vi.mock("./voice.js", () => ({
-  speak: vi.fn(() => ({ addEventListener: vi.fn((event, cb) => { if (event === 'end') cb(); }) }))
+  speak: vi.fn(() => ({ addEventListener: vi.fn((event, cb) => { if (event === 'end') cb(); }) })),
+  cancelVoice: vi.fn(),
 }));
 
 // Use fake timers for countdown

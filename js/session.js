@@ -1,4 +1,4 @@
-import { speak } from './voice.js';
+import { speak, cancelVoice } from './voice.js';
 import { saveSessionToHistory } from './historyStorage.js';
 
 // Wake Lock API support
@@ -185,7 +185,7 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   stopBtn.onclick = () => {
     aborted = true;  // halt countdown chain (speakAndWait callbacks become no-ops)
     running = false; // halt breathing loop (updateState early-exits on next rAF tick)
-    window.speechSynthesis?.cancel(); // silence any in-flight utterance immediately
+    cancelVoice(); // silence any in-flight utterance immediately
     if (sessionStarted) {
       // User stopped during active breathing — save a (partial) history entry.
       finishSession(false);
