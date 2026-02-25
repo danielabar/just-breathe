@@ -9,3 +9,9 @@ export function speak(text, returnUtterance = false) {
   window.speechSynthesis.speak(utter);
   if (returnUtterance) return utter;
 }
+
+// Cancels any utterance currently being spoken. Safe to call when speech
+// synthesis is unavailable (e.g. headless browsers, older iOS WebViews).
+export function cancelVoice() {
+  window.speechSynthesis?.cancel();
+}
