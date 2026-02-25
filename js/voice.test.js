@@ -2,7 +2,7 @@
 // so we mock these browser APIs to test our code's logic and interactions.
 // Actual speech synthesis cannot be tested in this environment.
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { speak } from "./voice.js";
+import { speak, cancelVoice } from "./voice.js";
 
 describe("speak", () => {
   beforeEach(() => {
@@ -23,5 +23,15 @@ describe("speak", () => {
     expect(window.speechSynthesis.speak).toHaveBeenCalledWith(
       expect.any(window.SpeechSynthesisUtterance)
     );
+  });
+
+  it("cancelVoice delegates to speechSynthesis.cancel", () => {
+    cancelVoice();
+    expect(window.speechSynthesis.cancel).toHaveBeenCalled();
+  });
+
+  it("cancelVoice is safe to call when speechSynthesis is unavailable", () => {
+    delete window.speechSynthesis;
+    expect(() => cancelVoice()).not.toThrow();
   });
 });

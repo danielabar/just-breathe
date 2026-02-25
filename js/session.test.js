@@ -3,9 +3,12 @@ import { startBreathingSession } from "./session.js";
 import { speak } from "./voice.js";
 import * as historyStorage from "./historyStorage.js";
 
-// Mock speak to track calls
+// Mock voice.js — speak tracks calls and immediately fires 'end' so speakAndWait
+// callbacks are driven by fake timers rather than real speech synthesis events.
+// cancelVoice is a no-op spy; session.js calls it on stop.
 vi.mock("./voice.js", () => ({
-  speak: vi.fn(() => ({ addEventListener: vi.fn((event, cb) => { if (event === 'end') cb(); }) }))
+  speak: vi.fn(() => ({ addEventListener: vi.fn((event, cb) => { if (event === 'end') cb(); }) })),
+  cancelVoice: vi.fn(),
 }));
 
 // Use fake timers for countdown
@@ -47,7 +50,7 @@ describe("startBreathingSession countdown", () => {
     expect(speak).toHaveBeenCalledWith('Breathe in');
   });
 
-  it("calls onDone with completed=false and saves to history when Stop button is clicked", () => {
+  it("does not save history and calls onDone when Stop is clicked during countdown", () => {
     const saveSessionSpy = vi.spyOn(historyStorage, "saveSessionToHistory");
     startBreathingSession({
       inSec: 3,
@@ -59,12 +62,43 @@ describe("startBreathingSession countdown", () => {
     const stopBtn = container.querySelector("#stop-btn");
     expect(stopBtn).toBeTruthy();
 
-    // Simulate clicking the Stop button
+    // Stop immediately — no timers advanced, so we're still in the countdown.
+    // No breathing has happened, so history must NOT be saved.
     stopBtn.click();
 
-    // onDone should be called with completed: false
     expect(onDone).toHaveBeenCalledWith({ completed: false });
+    expect(saveSessionSpy).not.toHaveBeenCalled();
+    saveSessionSpy.mockRestore();
+  });
+
+  it("does not speak further after Stop is clicked during countdown", () => {
+    startBreathingSession({ inSec: 3, outSec: 4, durationMin: 1, container, onDone });
+    const stopBtn = container.querySelector("#stop-btn");
+
+    // Only "Starting in 3" should have been spoken so far.
+    const callsBeforeStop = speak.mock.calls.length;
+    stopBtn.click();
+
+    // Advance through what would have been the rest of the countdown.
+    vi.advanceTimersByTime(3000);
+
+    // No new speak calls should have fired after Stop.
+    expect(speak.mock.calls.length).toBe(callsBeforeStop);
+  });
+
+  it("saves history when Stop is clicked during the active session", () => {
+    const saveSessionSpy = vi.spyOn(historyStorage, "saveSessionToHistory");
+    global.requestAnimationFrame = vi.fn(); // prevent loop from running
+    startBreathingSession({ inSec: 3, outSec: 4, durationMin: 1, container, onDone });
+
+    // Advance past the full countdown so the breathing loop starts.
+    vi.advanceTimersByTime(3000); // 3 × 1000ms countdown pauses
+
+    const stopBtn = container.querySelector("#stop-btn");
+    stopBtn.click();
+
     expect(saveSessionSpy).toHaveBeenCalledWith({ inSec: 3, outSec: 4, duration: 1 });
+    expect(onDone).toHaveBeenCalledWith({ completed: false });
     saveSessionSpy.mockRestore();
   });
 
