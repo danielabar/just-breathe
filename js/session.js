@@ -35,7 +35,27 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
   const COUNTDOWN_NUMBER_PAUSE_MS = 1000;   // Pause after each countdown number (2, 1)
   let totalMs = durationMin * 60 * 1000;
   let elapsed = 0;
+
+  // Three booleans control session lifecycle. Their jobs are distinct:
+  //
+  //   running        — drives the requestAnimationFrame loop during the active
+  //                    breathing session. Set to false to stop the loop. Also
+  //                    checked at the top of updateState() as an early-exit guard.
+  //
+  //   aborted        — set to true the moment the user taps Stop, regardless of
+  //                    whether we are still in the countdown or already breathing.
+  //                    Checked at the start of each speakAndWait callback so the
+  //                    countdown chain drops out immediately without speaking further.
+  //                    (running alone cannot serve this role because it is only
+  //                    checked inside updateState, which the countdown never enters.)
+  //
+  //   sessionStarted — flipped to true when the countdown reaches zero and the
+  //                    breathing loop is about to begin. Used by the stop handler
+  //                    to decide whether a history entry should be saved: stopping
+  //                    during the countdown means no breathing happened, so no entry.
   let running = true;
+  let aborted = false;
+  let sessionStarted = false;
   let state;
   let breathStart;
   let breathMs;
@@ -111,23 +131,28 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
     requestAnimationFrame(updateState);
   }
 
-  // Countdown before starting session
-  // Helper to speak and wait for speech to finish, then call callback
+  // Speaks `text` and invokes `cb` after the utterance ends plus `pauseMs` delay.
+  // Uses the utterance 'end' event when speech synthesis is available; falls back
+  // to a plain setTimeout when it is not (e.g. headless Chromium in tests).
+  // The `next` callback skips scheduling if `aborted` is true — this is how clicking
+  // Stop during the countdown prevents the remaining steps from being queued.
   function speakAndWait(text, pauseMs, cb) {
-    const utter = speak(text, true); // pass true to get utterance object
+    const utter = speak(text, true);
+    const next = () => { if (!aborted) setTimeout(cb, pauseMs); };
     if (utter && typeof utter.addEventListener === 'function') {
-      utter.addEventListener('end', () => {
-        setTimeout(cb, pauseMs);
-      });
+      utter.addEventListener('end', next);
     } else {
-      // fallback: just wait
-      setTimeout(cb, pauseMs);
+      next();
     }
   }
 
+  // Counts down from 3 to 0, speaking each number via speakAndWait().
+  // When count reaches 0 the countdown is finished: mark sessionStarted, then
+  // kick off the breathing loop. All earlier steps guard against aborted at
+  // the top of their callbacks to drop the chain immediately when Stop is clicked.
   function startCountdown(count) {
     if (count === 0) {
-      // Start session after countdown
+      sessionStarted = true; // breathing is about to begin; stop now warrants history
       state = 'in';
       breathMs = inSec * 1000;
       sessionStart = Date.now();
@@ -141,21 +166,33 @@ export function startBreathingSession({ inSec, outSec, durationMin, container, o
     if (count === 3) {
       stateEl.textContent = 'Starting in 3...';
       speakAndWait('Starting in 3', COUNTDOWN_STARTING_PAUSE_MS, () => {
+        if (aborted) return;
         stateEl.textContent = '2...';
         speakAndWait('2', COUNTDOWN_NUMBER_PAUSE_MS, () => {
+          if (aborted) return;
           stateEl.textContent = '1...';
-          speakAndWait('1', COUNTDOWN_NUMBER_PAUSE_MS, () => startCountdown(0));
+          speakAndWait('1', COUNTDOWN_NUMBER_PAUSE_MS, () => {
+            if (aborted) return;
+            startCountdown(0);
+          });
         });
       });
     }
-    // No else needed, as 2 and 1 are handled above
   }
 
   startCountdown(3);
 
   stopBtn.onclick = () => {
-    running = false;
-    finishSession(false);
+    aborted = true;  // halt countdown chain (speakAndWait callbacks become no-ops)
+    running = false; // halt breathing loop (updateState early-exits on next rAF tick)
+    window.speechSynthesis?.cancel(); // silence any in-flight utterance immediately
+    if (sessionStarted) {
+      // User stopped during active breathing — save a (partial) history entry.
+      finishSession(false);
+    } else {
+      // User stopped during countdown — no breathing occurred, skip history.
+      if (typeof onDone === 'function') onDone({ completed: false });
+    }
     // Release wake lock if held
     if (wakeLock && wakeLock.release) {
       wakeLock.release();
