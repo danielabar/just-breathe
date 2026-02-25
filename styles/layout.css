@@ -22,13 +22,13 @@ body {
 }
 
 main {
-	flex: 1 0 auto;
+	flex: 1;
+	min-height: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: stretch;
 	padding: 0;
-	padding-bottom: calc(62px + env(safe-area-inset-bottom));
 	width: 100vw;
 	max-width: 100vw;
 	overflow-x: clip;
@@ -36,6 +36,7 @@ main {
 
 #app-view {
 	flex: 1;
+	min-height: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -43,6 +44,7 @@ main {
 	width: 100vw;
 	max-width: 100vw;
 	overflow-x: clip;
+	overflow-y: auto;
 	padding-bottom: calc(62px + env(safe-area-inset-bottom));
 }
 
