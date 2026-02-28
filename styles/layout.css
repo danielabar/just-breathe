@@ -77,4 +77,71 @@ header h1 {
 }
 
 
+
+.app-shell {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-height: 100vh;
+	background: var(--color-bg);
+	position: relative;
+	z-index: 1;
+}
+
+@media (min-width: 900px) {
+
+	body {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem 0;
+		height: auto;
+		min-height: 100vh;
+	}
+
+	body::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		background: radial-gradient(
+			ellipse 700px 600px at 50% 45%,
+			rgba(125, 184, 145, 0.09) 0%,
+			transparent 70%
+		);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.app-shell {
+		min-height: unset;
+		height: min(860px, 90vh);
+		max-width: 420px;
+		border-radius: 2.5rem;
+		border: 1px solid var(--color-border-lit);
+		overflow: hidden;
+		box-shadow:
+			0 0 0 1px rgba(0, 0, 0, 0.5),
+			0 40px 120px rgba(0, 0, 0, 0.6),
+			0 0 80px rgba(125, 184, 145, 0.06);
+	}
+
+	header {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	main {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	#app-view {
+		width: 100%;
+		max-width: 100%;
+		padding-bottom: 0;
+	}
+
+}
+
 } /* end @layer base */

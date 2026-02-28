@@ -18,13 +18,14 @@
   <script type="module" src="./js/index.js" defer></script>
 </head>
 <body>
+  <div class="app-shell">
     <header>
       <h1>Just Breathe</h1>
     </header>
-  <main>
-    <section id="app-view"></section>
-  </main>
-  <nav class="tab-bar" aria-label="Main navigation">
+    <main>
+      <section id="app-view"></section>
+    </main>
+    <nav class="tab-bar" aria-label="Main navigation">
     <button id="tab-home"    class="tab-btn" type="button" aria-current="page">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M3 12L12 3l9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"
@@ -46,6 +47,7 @@
       </svg>
       <span>About</span>
     </button>
-  </nav>
+    </nav>
+  </div>
 </body>
 </html>

@@ -37,4 +37,14 @@
     color: var(--color-accent);
   }
 
+  @media (min-width: 900px) {
+    .tab-bar {
+      position: sticky;
+      bottom: 0;
+      left: auto;
+      right: auto;
+      width: 100%;
+    }
+  }
+
 }
