@@ -26,11 +26,21 @@ npm run dev
 
 Starts a local server at http://127.0.0.1:8080 with caching disabled. No build step — edit HTML, CSS, or JS and refresh.
 
+## Testing
+
+Unit tests use Vitest and run against the JS modules directly:
+
 ```sh
 npm test
 ```
 
-Runs the test suite (Vitest).
+Visual regression tests use Playwright and run against the live app in a browser:
+
+```sh
+npm run test:e2e
+```
+
+Use `npm run test:e2e:ui` to open the interactive Playwright UI, or `npm run test:e2e:update` to regenerate baseline snapshots after intentional visual changes.
 
 ## Tech
 
